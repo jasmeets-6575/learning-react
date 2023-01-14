@@ -15,10 +15,10 @@ const Book = () => {
     </article>
 }
 
-const Image = () => <h2>image placeholder</h2>
-const Title = () => <h2>Book Title</h2>
+const Image = () => <img src="https://m.media-amazon.com/images/I/51oVTRsjcqL._AC_UY218_.jpg" alt="THE SILENT PATIENT"></img>
+const Title = () => <h2>THE SILENT PATIENT</h2>
 const Author = () => {
-    return <h2>Author name</h2>
+    return <h2>Alex Michaelides</h2>
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
