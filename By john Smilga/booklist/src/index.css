@@ -37,5 +37,11 @@ body{
 
 .book h2{
     margin-top: 1rem;
+    font-size: 1.4rem;
+}
+
+.book h4{
+    color: #617d98;
     font-size: 1rem;
+    margin-top: 1rem;
 }
