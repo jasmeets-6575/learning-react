@@ -3,24 +3,25 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css"
 
+const author = "Alex Michaelides";
+const title = "THE SILENT PATIENT";
+const img = "https://m.media-amazon.com/images/I/51oVTRsjcqL._SX329_BO1,204,203,200_.jpg"
+
 function Booklist(){
     return <section className="booklist">
-        <Book/>
-        <Book/>
-        <Book/>
-        <Book/>
+        <Book author={author} title={title} img={img} />
+        <Book author={author} title={title} img={img} />
     </section>
 }
 
-const author = "Alex Michaelides";
-const Book = () => {
-    const title = "THE SILENT PATIENT";
-    return <article className="book">
-        <img src="https://m.media-amazon.com/images/I/51oVTRsjcqL._SX329_BO1,204,203,200_.jpg" alt="THE SILENT PATIENT"></img>
-        <h2>{title}</h2>
-        <h4>{author.toUpperCase()}</h4>
+const Book = (props) => {
+    return (<article className="book">
+        <img src={props.img} alt={props.title}></img>
+        <h2>{props.title}</h2>
+        <h4>{props.author}</h4>
     </article>
-}
+    );
+};
 
 
 // const Author = () => {
