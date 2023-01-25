@@ -36,11 +36,7 @@ function Booklist() {
 }
 
 const EventExamples = () => {
-  const handleFormInput = (e) => {
-    console.log(e.target);
-    console.log(e.target.name);
-    console.log(e.target.value);
-  };
+  
   const handleButtonClick = () => {
     alert("handle button click");
   };
@@ -56,12 +52,11 @@ const EventExamples = () => {
         <input
           type="text"
           name="example"
-          onChange={handleFormInput}
+          onChange={(e=> console.log(e.target.value) )}
           style={{ margin: "1rem 0" }}
-        />
-         <button onClick={handleFormSubmission}>Submit Me </button>
+         />
       </form>
-      <button onClick={handleButtonClick}>Click Me</button>
+      <button onClick={()=> console.log("click me")}>Click Me</button>
     </section>
   );
 };
