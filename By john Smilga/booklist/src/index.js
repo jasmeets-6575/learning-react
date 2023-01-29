@@ -25,43 +25,40 @@ const books = [
 ];
 
 const BookList = () => {
-
+  const getBook = (id) => {
+    const book = books.find((book) => book.id === id);
+    console.log(book);
+  };
   return (
     <section className="booklist">
       {books.map((book) => {
-        return <Book {...book} key={book.id}/>;
+        return <Book {...book} key={book.id} getBook={getBook}/>;
       })}
     </section>
   );
-}
-
+};
 
 const Book = (props) => {
-  const { img, title, author   } = props;
+  const { img, title, author, getBook, id } = props;
   return (
     <article className="book">
       <img src={img} alt={title}></img>
       <h2>{title}</h2>
-      <button >Click Me</button>
+      <button onClick={()=>getBook(id)}>Click Me</button>
       <h4>{author}</h4>
     </article>
   );
 };
 
-
-
-
-
-
 // const EventExamples = () => {
-  
+
 //   const handleButtonClick = () => {
 //     alert("handle button click");
 //   };
 //   const handleFormSubmission = (e) => {
-  //     e.preventDefault();
-  //     console.log("Form Submitted");
-  //   };
+//     e.preventDefault();
+//     console.log("Form Submitted");
+//   };
 
 //   return (
 //     <section>
@@ -78,7 +75,6 @@ const Book = (props) => {
 //     </section>
 //   );
 // };
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<BookList />);
