@@ -1,6 +1,6 @@
 import aboutImg from "../images/about.jpeg";
 import Title from "./Title";
-const About = () => {
+export const About = () => {
   return (
     <section className="section" id="about">
       <Title title="about" subTitle="us" />
@@ -30,4 +30,4 @@ const About = () => {
   );
 };
 
-export default About;
+
