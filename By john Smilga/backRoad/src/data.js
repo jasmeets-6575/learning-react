@@ -1,7 +1,7 @@
-import tour1 from "./images/tour-1.jpeg"
-import tour2 from "./images/tour-2.jpeg"
-import tour3 from "./images/tour-3.jpeg"
-import tour4 from "./images/tour-4.jpeg"
+import tour1 from "./images/tour-1.jpeg";
+import tour2 from "./images/tour-2.jpeg";
+import tour3 from "./images/tour-3.jpeg";
+import tour4 from "./images/tour-4.jpeg";
 
 export const pageLinks = [
   { id: 1, href: "#home", text: "home" },
@@ -40,11 +40,11 @@ export const services = [
 export const tours = [
   {
     id: 1,
-    img:tour1,
+    img: tour1,
     date: "August 25th, 2022",
     title: "Tibet Adventure",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque  vitae tempore voluptatum maxime reprehenderit eum quod  exercitationem fugit, qui corporis.",
-    icon:"fas fa-map" ,
+    icon: "fas fa-map",
     country: "China",
     days: 6,
     price: "2100",
@@ -55,7 +55,7 @@ export const tours = [
     date: "October 1th, 2022",
     title: "best of java",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque  vitae tempore voluptatum maxime reprehenderit eum quod  exercitationem fugit, qui corporis.",
-    icon:"fas fa-map" ,
+    icon: "fas fa-map",
     country: "Indonesia",
     days: 11,
     price: "1400",
@@ -66,7 +66,7 @@ export const tours = [
     date: "September 15th, 2022",
     title: "Explore Hong Kong",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque  vitae tempore voluptatum maxime reprehenderit eum quod  exercitationem fugit, qui corporis.",
-    icon:"fas fa-map" ,
+    icon: "fas fa-map",
     country: "Hong Kong",
     days: 8,
     price: "5000",
@@ -77,9 +77,16 @@ export const tours = [
     date: "Deceber 5th, 2022",
     title: "Kenya Highlights",
     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque  vitae tempore voluptatum maxime reprehenderit eum quod  exercitationem fugit, qui corporis.",
-    icon:"fas fa-map" ,
+    icon: "fas fa-map",
     country: "kenya",
     days: 20,
     price: "3300",
   },
+];
+
+export const footerLinks = [
+  { id: 1, href: "#home", text: "home" },
+  { id: 2, href: "#about", text: "about" },
+  { id: 3, href: "#services", text: "services" },
+  { id: 4, href: "#featured", text: "featured" },
 ];
