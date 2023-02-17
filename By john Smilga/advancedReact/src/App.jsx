@@ -1,4 +1,4 @@
-import Starter from "./advancedR/01-useState/01-error-example";
+import Starter from "./advancedR/01-useState/02-useState-basics";
 
 function App() {
 
