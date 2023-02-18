@@ -8,7 +8,7 @@ const UseStateArray = () => {
     let newPeople = people.filter((person) => person.id !== id);
     setPeople(newPeople);
   };
-
+  
   return (
     <div>
       {people.map((person) => {
@@ -20,6 +20,18 @@ const UseStateArray = () => {
           </div>
         );
       })}
+      <button
+        type="button"
+        style={{
+          marginTop: "2rem",
+          padding: "1rem",
+          color: "white",
+          background: "blue",
+        }}
+        onClick={()=>{setPeople([])}}
+      >
+        Remove All
+      </button>
     </div>
   );
 };
