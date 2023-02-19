@@ -1,4 +1,4 @@
-import Starter from "./advancedR/01-useState/03-useState-array";
+import Starter from "./advancedR/01-useState/04-useState-objects";
 
 function App() {
 
