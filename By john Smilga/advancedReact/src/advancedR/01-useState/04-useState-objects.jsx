@@ -7,11 +7,12 @@ const UseStateObject = () => {
     hobby:"read books"
   });  
   const displayPerson = () => {
-    setPerson({
-        name:"John",
-        age:28,
-        hobby:"dance "
-      });
+//     setPerson({
+//         name:"John",
+//         age:28,
+//         hobby:"dance "
+//       });
+setPerson({...person,name:"susan"});
 };
 const {name , age , hobby} = person;
   return ( <>
