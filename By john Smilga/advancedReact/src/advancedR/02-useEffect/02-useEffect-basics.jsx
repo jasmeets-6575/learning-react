@@ -10,7 +10,7 @@ const UseEffectBasics = () => {
 
   useEffect(() => {
     console.log("hello from useEffect");
-  },[]);
+  }, []);
   return (
     <div>
       <h1>value : {value}</h1>
