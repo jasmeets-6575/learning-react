@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const CodeExample = () => {
+const UseEffectBasics = () => {
   const [value, setValue] = useState(0);
 
   const sayHello = () => {
     console.log("Hello there");
-    setValue(value + 1);
   };
+  sayHello();
+
+  useEffect(() => {
+    console.log("hello from useEffect");
+  },[]);
   return (
     <div>
       <h1>value : {value}</h1>
@@ -17,4 +21,4 @@ const CodeExample = () => {
   );
 };
 
-export default CodeExample;
+export default UseEffectBasics;
