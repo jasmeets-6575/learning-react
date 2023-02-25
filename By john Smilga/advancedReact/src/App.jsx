@@ -1,4 +1,4 @@
-import Starter from "./advancedR/02-useEffect/02-useEffect-basics";
+import Starter from "./advancedR/02-useEffect/04-fetch-data";
 
 function App() {
 
