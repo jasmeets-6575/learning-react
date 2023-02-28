@@ -3,34 +3,40 @@ import { useEffect, useState } from "react";
 const url = "https://api.github.com/users/QuincyLarson";
 
 const MultipleReturnsFetchData = () => {
-  const [users, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [users, setUser] = useState([]);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch(url);
         const users = await response.json();
-        console.log(users);
+        setUser(users);
       } catch (error) {
+        setIsError(true);
         console.log(error);
       }
+      setIsLoading(false);
     };
     fetchUser();
   }, []);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>there is an error...</h2>;
+  }
+  
+  const {id,name,company,bio,avatar_url}= users
   return (
-    <section>
-      <h3>Fetch Data</h3>
-      {users.map((user) => {
-        const { id, avatar_url, name, bio, company } = user;
-        return (
-          <article key={id}>
-            <img src={avatar_url} alt={name} />
-            <h2>{name}</h2>
-            <h3>Works at {company}</h3>
-            <p>{bio}</p>
-          </article>
-        );
-      })}
-    </section>
+    <article key={id}>
+      <img src={avatar_url} alt={name} style={{ width: "150px" , borderRadius:"20px"}} />
+      <h2>{name}</h2>
+      <h3>Works at {company}</h3>
+      <p>{bio}</p>
+    </article>
   );
 };
 
