@@ -1,4 +1,4 @@
-import Starter from "./advancedR/03-conditonal-rendering/01-multiple-return-basics";
+import Starter from "./advancedR/03-conditonal-rendering/02-multiple-returns-fetchData";
 
 function App() {
 
