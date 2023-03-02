@@ -1,20 +1,20 @@
-import React, {useState} from 'react'
-import Tour from "./Tour"
+import React, { useState } from "react";
+import Tour from "./Tour";
 
-const Tours = ({tours ,removeTour}) => {
+const Tours = ({ tours, removeTour }) => {
   return (
     <section>
-      <div className='title'>
+      <div className="title">
         <h2>Our tours</h2>
         <div className="underline"></div>
       </div>
       <div>
-        {tours.map((tour)=>{
-          return <Tour key={tour.id} {...tour} removeTour={removeTour}></Tour>
+        {tours.map((tour) => {
+          return <Tour key={tour.id} {...tour} removeTour={removeTour}></Tour>;
         })}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Tours
+export default Tours;
