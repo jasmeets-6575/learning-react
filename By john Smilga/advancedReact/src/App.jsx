@@ -1,12 +1,11 @@
-import Starter from "./advancedR/03-conditonal-rendering/07-cleanup-function";
+import Navbar from "./advancedR/04-project-structure/Navbar";
 
 function App() {
-
   return (
-    <div >
-      <Starter/>
+    <div>
+      <Navbar />
     </div>
-  )
-} 
+  );
+}
 
 export default App;
