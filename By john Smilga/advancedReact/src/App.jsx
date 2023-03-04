@@ -1,4 +1,4 @@
-import Starter from "./advancedR/03-conditonal-rendering/06-user-challenge";
+import Starter from "./advancedR/03-conditonal-rendering/07-cleanup-function";
 
 function App() {
 
