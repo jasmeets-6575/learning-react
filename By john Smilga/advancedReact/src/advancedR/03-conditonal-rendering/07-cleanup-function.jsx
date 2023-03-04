@@ -8,14 +8,22 @@ const CleanupFunction = () => {
       <button className="btn" onClick={() => setToggle(!toggle)}>
         toggle component
       </button>
-      {toggle && <RandomComponent/>}
+      {toggle && <RandomComponent />}
     </div>
   );
 };
 
 const RandomComponent = () => {
-    useEffect(()=>{console.log("hmm... this is interesting");},[])
-    return <h2>hello there</h2>
+  useEffect(() => {
+    console.log("hmm... this is interesting");
+    const intId = setInterval(() => {
+      console.log("hello from interval");
+    }, 1000);
+    return () => {
+        clearInterval(intId);
+    }
+  }, []);
+  return <h2>hello there</h2>;
 };
 
 export default CleanupFunction;
