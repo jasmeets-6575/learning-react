@@ -1,4 +1,4 @@
-import Starter from "./advancedR/03-conditonal-rendering/04-short-circuit-example";
+import Starter from "./advancedR/03-conditonal-rendering/05-toggle-challenge";
 
 function App() {
 
