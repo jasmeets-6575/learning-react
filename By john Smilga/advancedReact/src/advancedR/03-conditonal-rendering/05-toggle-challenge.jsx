@@ -12,13 +12,13 @@ const toggleChallenge = () => {
   return (
     <div>
       <button className="btn" onClick={toggleAlert}>
-        toggle
+        Toggle
       </button>
       {showAlert && <Alert />}
     </div>
   );
 };
 const Alert = () => {
-  return <div className="alert alert-danger"> hello world</div>;
+  return <div className="alert alert-danger"> Alerting You....</div>;
 };
 export default toggleChallenge;
