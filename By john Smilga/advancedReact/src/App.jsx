@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import Starter from "./advancedR/01-useState/01-error-example";
 
 function App() {
 
   return (
-    <h1>hey</h1>
+    <div >
+      <Starter/>
+    </div>
   )
 } 
 
