@@ -1,4 +1,4 @@
-import Starter from "./advancedR/03-conditonal-rendering/02-multiple-returns-fetchData";
+import Starter from "./advancedR/03-conditonal-rendering/03-short-circuit-ovverview";
 
 function App() {
 
