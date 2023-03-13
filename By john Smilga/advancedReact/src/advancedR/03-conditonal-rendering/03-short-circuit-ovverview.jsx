@@ -5,7 +5,7 @@ const ShortCircuitOverview  = () => {
   const codeExample = text || 'hello world'
   return (
     <div>
-      <h2>Falsy OR : {text || 'hello world'}</h2>
+      <h2>Falsy OR :{text || 'hello world'}</h2>
       <h2>Falsy AND : {text && 'hello world'}</h2>
       <h2>Truthy OR : {name || 'hello world'}</h2>
       <h2>Truthy AND : {name && 'hello world'}</h2>

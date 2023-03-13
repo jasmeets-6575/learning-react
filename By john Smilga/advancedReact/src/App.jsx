@@ -1,4 +1,4 @@
-import Starter from "./advancedR/03-conditonal-rendering/03-short-circuit-ovverview";
+import Starter from "./advancedR/03-conditonal-rendering/04-short-circuit-example";
 
 function App() {
 
