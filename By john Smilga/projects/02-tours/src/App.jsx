@@ -36,7 +36,7 @@ function App() {
         <Loading />
       </main>
     );
-  }
+  }  
   if (tours.length === 0) {
     return (
       <main>
