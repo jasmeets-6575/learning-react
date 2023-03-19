@@ -1,8 +1,8 @@
-import Example from "./advancedR/04-project-structure/Example/index"
+import Starter from "./advancedR/05-leverage-javascript/Leverage-example"
 function App() {
   return (
     <div>
-    <Example/>
+    <Starter/>
     </div>
   );
 }
