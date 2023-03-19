@@ -1,9 +1,10 @@
-import Navbar from "./advancedR/04-project-structure/Navbar";
+import {Home,About} from "./advancedR/04-project-structure/Pages";
 
 function App() {
   return (
     <div>
-      <Navbar />
+      <Home/>
+      <About/>
     </div>
   );
 }
