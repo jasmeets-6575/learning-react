@@ -1,10 +1,8 @@
-import {Home,About} from "./advancedR/04-project-structure/Pages";
-
+import Example from "./advancedR/04-project-structure/Example/index"
 function App() {
   return (
     <div>
-      <Home/>
-      <About/>
+    <Example/>
     </div>
   );
 }
