@@ -1,8 +1,8 @@
-import Starter from "./advancedR/05-leverage-javascript/Leverage-example"
+import ControlledInputs from "./advancedR/06-forms/01-controlled-inputs"
 function App() {
   return (
     <div>
-    <Starter/>
+    <ControlledInputs/>
     </div>
   );
 }
