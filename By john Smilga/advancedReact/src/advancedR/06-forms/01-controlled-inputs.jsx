@@ -29,6 +29,7 @@ const ControlledInputs = () => {
           id='name'
         />
       </div>
+      
       <div className='form-row'>
         <label htmlFor='email' className='form-label'>
           Email
