@@ -1,7 +1,7 @@
-import ControlledInputs from "./advancedR/06-forms/03-Multiple-inputs"
+import ControlledInputs from "./advancedR/06-forms/05-form-data"
 function App() {
   return (
-    <div>
+    <div className="container">
     <ControlledInputs/>
     </div>
   );
