@@ -1,4 +1,4 @@
-import Navbar from "./advancedR/09-context-api/prop-drilling/Navbar"
+import Navbar from "./advancedR/09-context-api/context/Navbar"
 function App() {
   return (
     <div className="container">
