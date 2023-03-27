@@ -47,7 +47,7 @@ const UncontrolledInputs = () => {
             type='password'
             className='form-input'
             id='password'
-            name='password'
+            name='password'npm run d
           />
         </div>
 
