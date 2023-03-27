@@ -1,4 +1,4 @@
-import ControlledInputs from "./advancedR/08-custom-hooks/01-toggle"
+import ControlledInputs from "./advancedR/08-custom-hooks/02-fetch-data"
 function App() {
   return (
     <div className="container">
