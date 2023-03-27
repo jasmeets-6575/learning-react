@@ -1,17 +1,14 @@
-import { createContext, useContext, useState } from 'react';
+const { createContext, useState, useContext } = require("react");
 
-const GlobalContext = createContext();
+const GlobalContext = createContext()
 
-export const useGlobalContext = () => useContext(GlobalContext);
+export const useGlobalContext = () => useContext(GlobalContext)
 
-const AppContext = ({ children }) => {
-  const [name, setName] = useState('peter');
+const AppContext = ({children}) => {
+  const [name,setName] = useState("peter")
+  return <GlobalContext.Provider value={{name,setName}}>
+    {children}
+  </GlobalContext.Provider>
+}
 
-  return (
-    <GlobalContext.Provider value={{ name, setName }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
-
-export default AppContext;
+export default AppContext
