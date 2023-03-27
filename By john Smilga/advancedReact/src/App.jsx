@@ -1,8 +1,8 @@
-import ControlledInputs from "./advancedR/08-custom-hooks/02-fetch-data"
+import Navbar from "./advancedR/09-context-api/prop-drilling/Navbar"
 function App() {
   return (
     <div className="container">
-    <ControlledInputs/>
+    <Navbar/>
     </div>
   );
 }
