@@ -12,7 +12,7 @@ const Submenu = () => {
   const [columns, setColumns] = useState("cols-2");
 
   useEffect(() => {
-    setColumns("cols-2");
+    setColumns("col-2");
     const subMenu = container.current;
     const { center, bottom } = location;
     subMenu.style.left = `${center}px`;
@@ -21,7 +21,7 @@ const Submenu = () => {
     if (links.length === 3) {
       setColumns("col-3");
     }
-    if (links.length > 4) {
+    if (links.length > 3) {
       setColumns("col-4");
     }
   }, [location, links]);
