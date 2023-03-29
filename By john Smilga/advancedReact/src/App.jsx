@@ -1,8 +1,8 @@
-import Navbar from "./advancedR/09-context-api/context/Navbar"
+import ReducerBasics from "./advancedR/10-useReducer/01-useReducer"
 function App() {
   return (
     <div className="container">
-    <Navbar/>
+    <ReducerBasics/>
     </div>
   );
 }
