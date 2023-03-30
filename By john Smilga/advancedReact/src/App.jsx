@@ -1,8 +1,8 @@
-import ReducerBasics from "./advancedR/10-useReducer/01-useReducer"
+import LowerState from "./advancedR/11-performance/01-lower-state/index"
 function App() {
   return (
     <div className="container">
-    <ReducerBasics/>
+    <LowerState/>
     </div>
   );
 }
