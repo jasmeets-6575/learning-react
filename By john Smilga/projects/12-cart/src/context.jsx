@@ -1,12 +1,13 @@
 import { useReducer, createContext, useContext } from "react";
 import reducer from "./reducer";
+import cartItems from "./data";
 import { CLEAR_CART,INCREASE,REMOVE,DECREASE,LOADING,DISPLAY_ITEMS } from "./actions";
 
 const AppContext = createContext();
 
 const initialState = {
   loading: false,
-  cart: [],
+  cart: [...cartItems],
 };
 
 export const AppProvider = ({ children }) => {
