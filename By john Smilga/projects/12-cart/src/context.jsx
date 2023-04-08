@@ -13,9 +13,17 @@ const initialState = {
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return <AppContext.Provider value={{...state}}>{children}</AppContext.Provider>;
+  const clearCart = () => {
+    dispatch({type:CLEAR_CART})
+  }
+
+  const remove = () => {
+
+  }
+
+  return <AppContext.Provider value={{...state ,clearCart,remove}}>{children}</AppContext.Provider>;
 };
 
 export const useGlobalContext = () => {
   return useContext(AppContext);
-};
+}; 
