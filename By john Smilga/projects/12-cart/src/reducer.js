@@ -38,6 +38,9 @@ const reducer = (state, action) => {
     newCart.set(itemId, newItem);
     return { ...state, cart: newCart };
   }
+  if (action.type === LOADING) {
+    return { ...state, loading: true };
+  }
   throw new Error(`no matching action type : ${action.type}`);
 };
 
