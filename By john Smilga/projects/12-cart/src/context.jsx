@@ -17,7 +17,7 @@ const AppContext = createContext();
 
 const initialState = {
   loading: false,
-  cart: new Map(cartItems.map((item) => [item.id, item])),
+  cart: new Map(),
 };
 
 export const AppProvider = ({ children }) => {
