@@ -2,7 +2,7 @@ import SingleItem from "./SingleItem";
 import { useFetchTasks } from "./reactQueryCustomHooks";
 
 const Items = () => {
-  const { isLoading, data, isError } = useFetchTasks()
+  const { isLoading, data, isError } = useFetchTasks();
 
   if (isLoading) {
     return <p style={{ marginTop: "1rem" }}>Loading...</p>;

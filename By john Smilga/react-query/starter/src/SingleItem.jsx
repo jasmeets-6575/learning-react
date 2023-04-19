@@ -1,8 +1,9 @@
-import { useDeleteTask } from "./reactQueryCustomHooks";
+import { useDeleteTask, useEditTask } from "./reactQueryCustomHooks";
 
 const SingleItem = ({ item }) => {
-  const {deleteTask,deleteTaskLoading} = useDeleteTask()
-  
+  const { editTask } = useEditTask();
+  const { deleteTask, deleteTaskLoading } = useDeleteTask();
+
   return (
     <div className="single-item">
       <input
