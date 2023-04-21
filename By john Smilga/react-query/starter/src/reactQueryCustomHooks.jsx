@@ -10,7 +10,7 @@ export const useFetchTasks = () => {
       return data;
     },
   });
-  return { isLoading, isError, data };
+  return { isLoading, data, isError };
 };
 
 export const useCreateTask = () => {
