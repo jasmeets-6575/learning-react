@@ -10,14 +10,14 @@ const CartButtons = () => {
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="/cart" className="cart-btn">
-        Cart 
+        Cart
         <span className="cart-container">
           <FaShoppingCart />
           <span className="cart-value">0</span>
         </span>
       </Link>
-      <button type='button' className="auth-btn">
-        Login <FaUserPlus/>
+      <button type="button" className="auth-btn">
+        Login <FaUserPlus />
       </button>
     </Wrapper>
   );
