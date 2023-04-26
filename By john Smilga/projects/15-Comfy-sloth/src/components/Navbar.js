@@ -15,7 +15,7 @@ const Nav = () => {
       <div className="nav-center">
         <div className="nav-header">
           <Link to="/">
-            <image src={logo} alt="comfy sloth" />
+            <img src={logo} alt="comfy sloth" />
           </Link>
           <button type="button" className="nav-toggle" onClick={openSidebar}>
             <FaBars />
