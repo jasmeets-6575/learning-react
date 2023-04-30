@@ -36,8 +36,9 @@ const CartItem = ({ id, img, title, price, amount }) => {
             if (amount === 1) {
               dispatch(removeItem(id));
               return;
-            }
+            }else{
             dispatch(decrease(id));
+            }
           }}
         >
           <ChevronDown />
