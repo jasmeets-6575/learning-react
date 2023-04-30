@@ -37,7 +37,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
               dispatch(removeItem(id));
               return;
             }else{
-            dispatch(decrease(id));
+            dispatch(decrease({id}));
             }
           }}
         >
