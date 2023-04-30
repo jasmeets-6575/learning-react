@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import cartItems from "../../cartItems";
-
+import axios from "axios";
 const url = "https://course-api.com/react-useReducer-cart-project";
 
 const initialState = {
@@ -10,10 +9,14 @@ const initialState = {
   isLoading: true,
 };
 
-export const getCartitems = createAsyncThunk("cart/getCartItems", () => {
-  return fetch(url)
-    .then((resp) => resp.json())
-    .catch((err) => console.log(err));
+export const getCartitems = createAsyncThunk("cart/getCartItems", async () => {
+  try {
+    const resp = await axios(url);
+    const data = resp.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const cartSlice = createSlice({
@@ -47,17 +50,18 @@ const cartSlice = createSlice({
       state.total = total;
     },
   },
-  extraReducers: {
-    [getCartitems.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getCartitems.fulfilled]:(state,action)=>{
-      state.isLoading=false
-      state.cartItems=action.payload
-    },
-    [getCartitems.rejected]: (state) => {
-      state.isLoading = false;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCartitems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCartitems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cartItems = action.payload;
+      })
+      .addCase(getCartitems.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 export const { clearCart, removeItem, increase, decrease, calculateTotals } =
