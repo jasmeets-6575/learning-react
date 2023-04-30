@@ -14,7 +14,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <button
           className="remove-btn"
           onClick={() => {
-            dispatch(removeItem(id));
+            dispatch(removeItem({ id }));
           }}
         >
           remove
@@ -24,7 +24,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <button
           className="amount-btn"
           onClick={() => {
-            dispatch(increase(id));
+            dispatch(increase({ id }));
           }}
         >
           <ChevronUp />
@@ -33,6 +33,10 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <button
           className="amount-btn"
           onClick={() => {
+            if (amount === 1) {
+              dispatch(removeItem(id));
+              return;
+            }
             dispatch(decrease(id));
           }}
         >
