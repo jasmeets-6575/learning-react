@@ -9,7 +9,9 @@ import JobsContainer from "./JobsContainer";
 import ChartsContainer from "./ChartsContainer";
 import StatsContainer from "./StatsContainer";
 import Loading from "./Loading";
+import StatItem from "./StatItem";
 export {
+  StatItem,
   Loading,
   StatsContainer,
   ChartsContainer,
