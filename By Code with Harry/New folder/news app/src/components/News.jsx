@@ -15,16 +15,21 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         <h2>NewsMonkey - Top Headlines</h2>
-        {this.state.articles.map((element) => {
-          const { title, description, urlToImage, url } = element;
-          return (
-            <div className="row">
+        <div className="row">
+          {this.state.articles.map((element) => {
+            const { title, description, urlToImage, url } = element;
+            return (
               <div className="col-md-4">
-                <NewsItem title={title} desc={description} url={urlToImage} id={url} />
+                <NewsItem
+                  title={title}
+                  desc={description}
+                  url={urlToImage}
+                  id={url}
+                />
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }
