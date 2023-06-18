@@ -1,15 +1,16 @@
 import React, { Component } from "react";
+
 export default class NewsItem extends Component {
   render() {
-    const { title, description, urlToImage } = this.props;
+    const { title, desc, url, id } = this.props;
     return (
       <div className="my-3">
         <div className="card" style={{ width: "18rem" }}>
-          <img src={urlToImage} className="card-img-top" alt="..." />
+          <img src={url} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{title}</h5>
-            <p className="card-text">{description}</p>
-            <a href="/newsContainer" className="btn btn-sm btn-primary">
+            <p className="card-text">{desc}</p>
+            <a href={`/newsDetails/${id}`} className="btn btn-sm btn-primary">
               Read More...
             </a>
           </div>
