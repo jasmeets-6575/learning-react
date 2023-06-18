@@ -15,18 +15,42 @@ export default class News extends Component {
 
   async componentDidMount() {
     let url =
-      "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&page=1";
+      "https://newsapi.org/v2/top-headlines?country=in&apiKey=cc0605cd3c234fe0b243edde6467acdf&page=1&pageSize=9";
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles });
+    this.setState({
+      articles: parsedData.articles,
+      totalArticles: parsedData.totalResults,
+    });
   }
-  
-  handlePrevClick = () => {
-    console.log("prev");
+
+  handlePrevClick = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=cc0605cd3c234fe0b243edde6467acdf&page=${
+      this.setState.page - 1
+    }&pageSize=9`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+
+    this.setState({
+      page: this.setState.page - 1,
+      articles: parsedData.articles,
+    });
   };
 
-  handleNextClick = () => {
-    console.log("next");
+  handleNextClick = async () => {
+    if (this.setState.page + 1 > Math.ceil(this.state.totalResults / 9)) {
+    } else {
+      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=cc0605cd3c234fe0b243edde6467acdf&page=${
+        this.setState.page + 1
+      }&pageSize=9`;
+      let data = await fetch(url);
+      let parsedData = await data.json();
+
+      this.setState({
+        page: this.setState.page + 1,
+        articles: parsedData.articles,
+      });
+    }
   };
 
   render() {
@@ -51,14 +75,15 @@ export default class News extends Component {
         <div className="container d-flex justify-content-between">
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
+            disabled={this.state.page <= 1}
             onClick={this.handlePrevClick}
           >
             &larr; Previous
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
             onClick={this.handleNextClick}
           >
             Next &rarr;
