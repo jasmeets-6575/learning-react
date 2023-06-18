@@ -1,7 +1,5 @@
 {
-  "status": "ok",
-  "totalResults": 3,
-  "articles": [
+  "articles" : [
     {
       "source": {
         "id": "bbc-sport",
