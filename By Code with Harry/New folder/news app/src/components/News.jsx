@@ -16,7 +16,6 @@ export default class News extends Component {
     category: PropTypes.string
   }
 
-
   articles = data.articles;
   constructor() {
     super();
