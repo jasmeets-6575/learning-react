@@ -7,8 +7,8 @@ import PropTypes from 'prop-types'
 export default class News extends Component {
   static defaultProps = {
     country: "in",
-    pageSize: 12,
-    category: general
+    pageSize: 6,
+    category: "general"
   }
   static propTypes = {
     country: PropTypes.string,
@@ -71,7 +71,7 @@ export default class News extends Component {
 
   render() {
     return (
-      <div className="container my-3">
+      <div className="container my-3" style={{margin:"30px 0px"}}>
         <h1 className="text-center">NewsMonkey - Top Headlines</h1>
         {this.state.loading ? (
           <Loading />
