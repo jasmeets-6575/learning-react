@@ -2,10 +2,13 @@ import React, { Component } from "react";
 
 export default class NewsItem extends Component {
   render() {
-    const { title, desc, url, id, author } = this.props;
+    const { title, desc, url, id, author, source } = this.props;
     return (
       <div className="my-3">
         <div className="card">
+        <span class="position-absolute top-0 start-0 translate-middle-y badge rounded-pill bg-danger z-1" >
+               {source? source : "unknown"}
+              </span>
           <img
             src={
               url
@@ -30,7 +33,7 @@ export default class NewsItem extends Component {
             </p>
             <p className="card-text">
               <small class="text-body-secondary">
-                By {author ? author : "unknown"} 
+                By {author ? author : "unknown"}
               </small>
             </p>
             <a
