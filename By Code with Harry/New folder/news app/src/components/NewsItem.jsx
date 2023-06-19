@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 export default class NewsItem extends Component {
   render() {
-    const { title, desc, url, id } = this.props;
+    const { title, desc, url, id, author } = this.props;
     return (
       <div className="my-3">
-        <div className="card" >
+        <div className="card">
           <img
             src={
               url
@@ -22,7 +22,17 @@ export default class NewsItem extends Component {
                 : "SGB: Sovereign Gold Bond Scheme 2023-24 Series I issue price announced; check details - The Economic Times"}
               ...
             </h5>
-            <p className="card-text">{desc ? desc.slice(0, 100) : "The Reserve Bank of India (RBI) has kept the settlement date of this tranche of Sovereign Gold Bond Scheme 2023-24 Series as June 27, 2023."}...</p>
+            <p className="card-text">
+              {desc
+                ? desc.slice(0, 100)
+                : "The Reserve Bank of India (RBI) has kept the settlement date of this tranche of Sovereign Gold Bond Scheme 2023-24 Series as June 27, 2023."}
+              ...
+            </p>
+            <p className="card-text">
+              <small class="text-body-secondary">
+                By {author ? author : "unknown"} 
+              </small>
+            </p>
             <a
               href={
                 id
