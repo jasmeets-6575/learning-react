@@ -14,8 +14,7 @@ export default class News extends Component {
   }
 
   async componentDidMount() {
-    let url =
-      "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=12&page=1";
+    let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=${this.props.pageSize}&page=1`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
@@ -25,7 +24,9 @@ export default class News extends Component {
   }
 
   handlePrevClick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=12&page=${this.state.page -1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=${
+      this.props.pageSize
+    }&page=${this.state.page - 1}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
@@ -33,11 +34,16 @@ export default class News extends Component {
       articles: parsedData.articles,
     });
   };
-  
+
   handleNextClick = async () => {
-    if (this.setState.page + 1 > Math.ceil(this.state.totalResults / 9)) {
+    if (
+      this.state.page + 1 >
+      Math.ceil(this.state.totalResults / this.props.pageSize)
+    ) {
     } else {
-      let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=12&page=${this.state.page + 1}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=cc0605cd3c234fe0b243edde6467acdf&pageSize=${
+        this.props.pageSize
+      }&page=${this.state.page + 1}`;
       let data = await fetch(url);
       let parsedData = await data.json();
 
@@ -80,6 +86,10 @@ export default class News extends Component {
             type="button"
             className="btn btn-primary"
             onClick={this.handleNextClick}
+            disabled={
+              this.state.page + 1 >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
+            }
           >
             Next &rarr;
           </button>
