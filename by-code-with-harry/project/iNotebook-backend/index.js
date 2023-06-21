@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
