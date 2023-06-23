@@ -30,29 +30,25 @@ const createUser = asyncWrapper(async (req, res) => {
 
 const loginUser = asyncWrapper(async (req, res) => {
   const { email, password } = req.body;
-  try {
-    if (!email || !password) {
-      throw new BadRequestError("Please provide email and password");
-    }
-    let user = await User.findOne({ email });
-    if (!user) {
-      throw new UnauthenticatedError("Invalid Credentials");
-    }
-    const passwordCompare = await bcrypt.compare(password, user.password);
-    if (!passwordCompare) {
-      throw new UnauthenticatedError("Invalid Credentials");
-    }
-    const data = {
-      user: {
-        id: user.id,
-      },
-    };
-    const authToken = jwt.sign(data, process.env.JWT_SECRET);
-    res.status(StatusCodes.OK).json({ authToken });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("internal server Error");
+
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
   }
+  let user = await User.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
+  const passwordCompare = await bcrypt.compare(password, user.password);
+  if (!passwordCompare) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+  const authToken = jwt.sign(data, process.env.JWT_SECRET);
+  res.status(StatusCodes.OK).json({ authToken });
 });
 
 module.exports = { getAllUser, createUser, loginUser };
