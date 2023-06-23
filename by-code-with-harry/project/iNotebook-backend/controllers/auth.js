@@ -6,4 +6,9 @@ const getAllUser = asyncWrapper(async (req, res) => {
   res.status(200).json({ user });
 });
 
-module.exports = { getAllUser };
+const createUser = asyncWrapper(async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(201).json({ user });
+});
+
+module.exports = { getAllUser, createUser }

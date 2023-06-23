@@ -1,6 +1,7 @@
 require("dotenv").config();
 const connectDB = require("./db/db");
 const express = require("express");
+const users = require("./routes/auth")
 const app = express();
 
 app.use(express.json());
@@ -9,7 +10,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/api/auth",require("./routes/auth"))
+app.use("/api/auth",users)
 app.use("/api/notes",require("./routes/notes"))
 
 const port = process.env.PORT || 3000;
