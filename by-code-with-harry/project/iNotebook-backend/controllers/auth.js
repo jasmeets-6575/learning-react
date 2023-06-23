@@ -50,5 +50,14 @@ const loginUser = asyncWrapper(async (req, res) => {
   const authToken = jwt.sign(data, process.env.JWT_SECRET);
   res.status(StatusCodes.OK).json({ authToken });
 });
-
-module.exports = { getAllUser, createUser, loginUser };
+const getUser = asyncWrapper(async (req, res) => {
+try {
+    userId = "todo";
+    const user = await User.findById(userId).select("-password")
+    res.json({user})
+} catch (error) {
+    console.log(error.message);
+    res.status(500).send("Internal server error")
+}
+})
+module.exports = { getAllUser, createUser, loginUser, getUser };
