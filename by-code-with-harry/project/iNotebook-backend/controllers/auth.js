@@ -52,7 +52,7 @@ const loginUser = asyncWrapper(async (req, res) => {
 });
 const getUser = asyncWrapper(async (req, res) => {
 try {
-    userId = "todo";
+    userId = req.user.id;
     const user = await User.findById(userId).select("-password")
     res.json({user})
 } catch (error) {
