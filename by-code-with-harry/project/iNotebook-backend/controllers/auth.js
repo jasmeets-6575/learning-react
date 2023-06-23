@@ -1,8 +1,8 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const asyncWrapper = require("../asyncWrapper/async");
-const { BadRequestError } = require('../errors')
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const getAllUser = asyncWrapper(async (req, res) => {
   const user = await User.find({});
@@ -17,7 +17,13 @@ const createUser = asyncWrapper(async (req, res) => {
     password: securedPass,
     email: req.body.email,
   });
-  res.status(StatusCodes.OK).json({ user });
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+  const authToken = jwt.sign(data, process.env.JWT_SECRET);
+  res.status(StatusCodes.OK).json({ authToken });
 });
 
 module.exports = { getAllUser, createUser };
