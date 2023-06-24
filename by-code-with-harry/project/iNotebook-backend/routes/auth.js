@@ -12,5 +12,5 @@ router.route("/").get(getAllUser);
 router.route("/createuser").post(createUser);
 router.route("/getuser").post(fetchuser, getUser);
 router.route("/login").post(loginUser);
-
+ 
 module.exports = router;

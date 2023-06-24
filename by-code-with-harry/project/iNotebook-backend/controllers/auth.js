@@ -50,11 +50,12 @@ const loginUser = asyncWrapper(async (req, res) => {
   const authToken = jwt.sign(data, process.env.JWT_SECRET);
   res.status(StatusCodes.OK).json({ authToken });
 });
+
 const getUser = asyncWrapper(async (req, res) => {
 try {
-    userId = req.user.id;
+    let userId = req.user.id;
     const user = await User.findById(userId).select("-password")
-    res.json({user})
+    res.send(user)
 } catch (error) {
     console.log(error.message);
     res.status(500).send("Internal server error")
