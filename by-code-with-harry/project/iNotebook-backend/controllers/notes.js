@@ -14,7 +14,6 @@ const fetchAllNotes = asyncWrapper(async (req, res) => {
 });
 
 const addNote = asyncWrapper(async (req, res) => {
-  console.log(req.user);
   try {
     const { title, description, tag } = req.body;
     const notes = await Notes.create({
@@ -56,4 +55,20 @@ const updateNote = asyncWrapper(async (req, res) => {
   );
   res.status(StatusCodes.OK).json({ note });
 });
-module.exports = { fetchAllNotes, addNote, updateNote };
+
+const deleteNote = asyncWrapper(async (req, res) => {
+  const { title, description, tag } = req.body;
+  let note = await Notes.findById(req.params.id);
+  if (!note) {
+    return res.status(StatusCodes.NOT_FOUND).send("Not Found");
+  }
+  if (note.user.toString() !== req.user.id) {
+    return res.status(StatusCodes.UNAUTHORIZED).send("Not Allowed");
+  }
+  note = await Notes.findByIdAndDelete(req.params.id);
+  res
+    .status(StatusCodes.OK)
+    .json({ success: "Note has been deleted", note: note });
+});
+
+module.exports = { fetchAllNotes, addNote, updateNote, deleteNote };
