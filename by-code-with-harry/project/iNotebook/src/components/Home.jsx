@@ -1,6 +1,10 @@
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
-export default Home
+    <div>
+      <h1>Add a Note</h1>
+      Form
+      <h1>Yours Note</h1>
+    </div>
+  );
+};
+export default Home;
