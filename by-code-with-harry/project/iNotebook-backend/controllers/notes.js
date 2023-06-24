@@ -31,44 +31,54 @@ const addNote = asyncWrapper(async (req, res) => {
 
 const updateNote = asyncWrapper(async (req, res) => {
   const { title, description, tag } = req.body;
-  const newNote = {};
-  if (title) {
-    newNote.title = title;
+  try {
+    const newNote = {};
+    if (title) {
+      newNote.title = title;
+    }
+    if (description) {
+      newNote.description = description;
+    }
+    if (tag) {
+      newNote.tag = tag;
+    }
+    let note = await Notes.findById(req.params.id);
+    if (!note) {
+      return res.status(StatusCodes.NOT_FOUND).send("Not Found");
+    }
+    if (note.user.toString() !== req.user.id) {
+      return res.status(StatusCodes.UNAUTHORIZED).send("Not Allowed");
+    }
+    note = await Notes.findByIdAndUpdate(
+      req.params.id,
+      { $set: newNote },
+      { new: true }
+    );
+    res.status(StatusCodes.OK).json({ note });
+  } catch (error) {
+    console.log(error.message);
+    res.send(error.message);
   }
-  if (description) {
-    newNote.description = description;
-  }
-  if (tag) {
-    newNote.tag = tag;
-  }
-  let note = await Notes.findById(req.params.id);
-  if (!note) {
-    return res.status(StatusCodes.NOT_FOUND).send("Not Found");
-  }
-  if (note.user.toString() !== req.user.id) {
-    return res.status(StatusCodes.UNAUTHORIZED).send("Not Allowed");
-  }
-  note = await Notes.findByIdAndUpdate(
-    req.params.id,
-    { $set: newNote },
-    { new: true }
-  );
-  res.status(StatusCodes.OK).json({ note });
 });
 
 const deleteNote = asyncWrapper(async (req, res) => {
   const { title, description, tag } = req.body;
-  let note = await Notes.findById(req.params.id);
-  if (!note) {
-    return res.status(StatusCodes.NOT_FOUND).send("Not Found");
+  try {
+    let note = await Notes.findById(req.params.id);
+    if (!note) {
+      return res.status(StatusCodes.NOT_FOUND).send("Not Found");
+    }
+    if (note.user.toString() !== req.user.id) {
+      return res.status(StatusCodes.UNAUTHORIZED).send("Not Allowed");
+    }
+    note = await Notes.findByIdAndDelete(req.params.id);
+    res
+      .status(StatusCodes.OK)
+      .json({ success: "Note has been deleted", note: note });
+  } catch (error) {
+    console.log(error.message);
+    res.send(error.message);
   }
-  if (note.user.toString() !== req.user.id) {
-    return res.status(StatusCodes.UNAUTHORIZED).send("Not Allowed");
-  }
-  note = await Notes.findByIdAndDelete(req.params.id);
-  res
-    .status(StatusCodes.OK)
-    .json({ success: "Note has been deleted", note: note });
 });
 
 module.exports = { fetchAllNotes, addNote, updateNote, deleteNote };
