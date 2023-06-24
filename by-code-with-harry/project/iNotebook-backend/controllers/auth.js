@@ -39,6 +39,7 @@ const createUser = asyncWrapper(async (req, res) => {
 });
 
 const loginUser = asyncWrapper(async (req, res) => {
+  let success = true;
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -58,7 +59,7 @@ const loginUser = asyncWrapper(async (req, res) => {
       },
     };
     const authToken = jwt.sign(data, process.env.JWT_SECRET);
-    res.status(StatusCodes.OK).json({ authToken });
+    res.status(StatusCodes.OK).json({ success, authToken });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Internal Server Error");

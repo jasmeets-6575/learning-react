@@ -32,16 +32,7 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const resJson = response.json();
-    const note = {
-      _id: "64968af9acc93cfc8a7e62a71",
-      user: "649640cdf2add0ff4c5b6878",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2023-06-24T06:19:37.753Z",
-      __v: 0,
-    };
+    const note = await response.json();
     setNotes(notes.concat(note));
   };
 
@@ -74,17 +65,20 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const resJson = response.json();
+    const resJson = await response.json();
 
+    let newNotes = JSON.parse(JSON.stringify(notes));
     // Logic to edit
     for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+      const element = newNotes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        newNotes[index].title = title;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag;
+        break;
       }
     }
+    setNotes(newNotes);
   };
 
   return (

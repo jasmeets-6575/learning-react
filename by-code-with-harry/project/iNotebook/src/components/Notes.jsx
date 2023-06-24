@@ -4,8 +4,9 @@ import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 
 const Notes = () => {
-  const { notes, getNotes } = useContext(NoteContext);
+  const { notes, getNotes, editNote } = useContext(NoteContext);
   const [note, setNote] = useState({
+    id: "",
     etitle: "",
     edescription: "",
     etag: "",
@@ -14,16 +15,19 @@ const Notes = () => {
     getNotes();
   }, []);
   const ref = useRef(null);
+  const refClose = useRef(null);
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
+      id: currentNote._id,
       etitle: currentNote.title,
       edescription: currentNote.description,
       etag: currentNote.tag,
     });
   };
   const handleClick = (e) => {
-    e.preventDefault();
+    editNote(note.id, note.etitle, note.edescription, note.etag);
+    refClose.current.click();
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -74,6 +78,8 @@ const Notes = () => {
                     value={note.etitle}
                     aria-describedby="emailHelp"
                     onChange={onChange}
+                    required
+                    minLength={3}
                   />
                 </div>
                 <div className="mb-3">
@@ -87,6 +93,8 @@ const Notes = () => {
                     name="edescription"
                     value={note.edescription}
                     onChange={onChange}
+                    required
+                    minLength={3}
                   />
                 </div>
                 <div className="mb-3">
@@ -106,13 +114,18 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
+                ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClick}
+              >
                 Update Note
               </button>
             </div>
@@ -122,6 +135,7 @@ const Notes = () => {
       <div>
         <div className="row my-3">
           <h2>Yours Note</h2>
+          {notes.length === 0 && <h2>No notes to display</h2>}
           {notes.map((note) => {
             return (
               <NoteItem key={note._id} updateNote={updateNote} note={note} />
