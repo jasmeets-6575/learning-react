@@ -27,7 +27,8 @@ const Login = () => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   return (
-    <div className="container">
+    <div className="container mt-3">
+      <h2 className="my-3">Login to continue to INotebook</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">

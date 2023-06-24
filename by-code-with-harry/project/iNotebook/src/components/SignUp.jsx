@@ -27,15 +27,16 @@ const SignUp = () => {
     if (resJson.authToken) {
       localStorage.setItem("token", resJson.authToken);
       navigate("/");
-    }else{
-        alert("Invalid Credentials")
+    } else {
+      alert("Invalid Credentials");
     }
   };
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   return (
-    <div className="container">
+    <div className="container mt-3">
+      <h2 className="my-3">New to INotebook ? Sign Up to continue</h2>
       <form onSubmit={handleSubmit}>
         <div class="mb-3">
           <label htmlFor="name" class="form-label">
