@@ -1,5 +1,10 @@
 const express = require("express");
-const { fetchAllNotes, addNote, updateNote, deleteNote } = require("../controllers/notes");
+const {
+  fetchAllNotes,
+  addNote,
+  updateNote,
+  deleteNote,
+} = require("../controllers/notes");
 const router = express.Router();
 const fetchuser = require("../middleware/fetchUser");
 

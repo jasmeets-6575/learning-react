@@ -1,7 +1,6 @@
 const Notes = require("../models/Notes");
 const { StatusCodes } = require("http-status-codes");
 const asyncWrapper = require("../asyncWrapper/async");
-const BadRequestError = require("../errors/bad-request");
 
 const fetchAllNotes = asyncWrapper(async (req, res) => {
   try {
@@ -9,7 +8,7 @@ const fetchAllNotes = asyncWrapper(async (req, res) => {
     res.json(notes);
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -25,7 +24,7 @@ const addNote = asyncWrapper(async (req, res) => {
     res.json(notes);
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -57,12 +56,11 @@ const updateNote = asyncWrapper(async (req, res) => {
     res.status(StatusCodes.OK).json({ note });
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 const deleteNote = asyncWrapper(async (req, res) => {
-  const { title, description, tag } = req.body;
   try {
     let note = await Notes.findById(req.params.id);
     if (!note) {
@@ -77,7 +75,7 @@ const deleteNote = asyncWrapper(async (req, res) => {
       .json({ success: "Note has been deleted", note: note });
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    res.status(500).send("Internal Server Error");
   }
 });
 
