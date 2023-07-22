@@ -1,7 +1,7 @@
 import Person from "./Person";
-import { People } from "./types";
-import React from "react";
-const List: React.FC = ({ people }: People) => {
+import { ListProps, People } from "./types";
+
+const List = ({ people }: ListProps) => {
   return (
     <section>
       {people.map((person: People) => {

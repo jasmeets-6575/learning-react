@@ -3,10 +3,11 @@ import { data } from "./data";
 import List from "./List";
 import { People } from "./types";
 
-const App = () => {
+function App(): JSX.Element {
   const [people, setPeople] = useState<People[]>(data);
+
   return (
-    <main className="container">
+    <main>
       <section className="container">
         <h3>{people.length} birthdays today</h3>
         <List people={people} />
@@ -20,6 +21,6 @@ const App = () => {
       </section>
     </main>
   );
-};
+}
 
 export default App;

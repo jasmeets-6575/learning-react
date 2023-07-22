@@ -1,4 +1,6 @@
-const Person = ({ image, name, age }) => {
+import { People } from "./types";
+
+const Person = ({ image, name, age }: People) => {
   return (
     <article className="person">
       <img src={image} alt={name} className="img" />
