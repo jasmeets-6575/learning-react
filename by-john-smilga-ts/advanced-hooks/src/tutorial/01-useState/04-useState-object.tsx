@@ -12,10 +12,10 @@ const UseStateObject: React.FC = () => {
   });
 
   const displayPerson = () => {
-    setPerson({ name: "john", age: 28, hobby: "scream at the computer" });
+    // setPerson({ name: "john", age: 28, hobby: "scream at the computer" });
     // be careful, don't overwrite
     // setPerson({ name: 'susan' });
-    // setPerson({ ...person, name: 'susan' });
+    setPerson({ ...person, name: "susan" });
   };
   return (
     <>

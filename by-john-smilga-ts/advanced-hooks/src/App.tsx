@@ -1,5 +1,10 @@
+import Starter from "../src/tutorial/01-useState/04-useState-object";
 function App() {
-  return <h1>hello world</h1>;
+  return (
+    <>
+      <Starter />
+    </>
+  );
 }
 
 export default App;
