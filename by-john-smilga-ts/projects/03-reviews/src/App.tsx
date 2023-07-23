@@ -4,9 +4,30 @@ import { FaChevronLeft, FaChevronRight, FaQuoteRight } from "react-icons/fa";
 import { PersonType } from "./types.d";
 
 function App() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState<number>(0);
   const { name, job, image, text } = people[index];
 
+  const checkNumber = (num: number) => {
+    if (num > people.length - 1) {
+      return 0;
+    }
+    if (num < 0) {
+      return people.length - 1;
+    }
+    return num;
+  };
+  const nextPerson = () => {
+    setIndex((index: number) => {
+      const newIndex = index + 1;
+      return checkNumber(newIndex);
+    });
+  };
+  const prevPerson = () => {
+    setIndex((index: number) => {
+      const newIndex = index - 1;
+      return checkNumber(newIndex);
+    });
+  };
   return (
     <main>
       <article className="review">
@@ -20,10 +41,10 @@ function App() {
         <p className="job">{job}</p>
         <p className="info">{text}</p>
         <div className="btn-container">
-          <button className="prev-btn">
+          <button className="prev-btn" onClick={prevPerson}>
             <FaChevronLeft />
           </button>
-          <button className="next-btn">
+          <button className="next-btn" onClick={nextPerson}>
             <FaChevronRight />
           </button>
         </div>
