@@ -1,7 +1,7 @@
 import Tour from "./Tour";
 import { ToursProps } from "./types.d";
 
-const Tours = ({ tours }: ToursProps) => {
+const Tours = ({ tours, removeTour }: ToursProps) => {
   return (
     <section>
       <div className="title">
@@ -10,7 +10,7 @@ const Tours = ({ tours }: ToursProps) => {
       </div>
       <div className="tours">
         {tours.map((tour) => {
-          return <Tour key={tour.id} {...tour} />;
+          return <Tour key={tour.id} {...tour} removeTour={removeTour} />;
         })}
       </div>
     </section>

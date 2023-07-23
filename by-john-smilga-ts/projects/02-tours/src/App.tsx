@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import Tours from "./Tours";
 import { TourType } from "./types.d";
@@ -9,6 +9,10 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [tours, setTours] = useState<TourType[]>([]);
 
+  const removeTour = (id: string) => {
+    const newTours = tours.filter((tour) => tour.id !== id);
+    setTours(newTours);
+  };
   const fetchTours = async () => {
     setLoading(true);
     try {
@@ -45,7 +49,7 @@ function App() {
   }
   return (
     <main>
-      <Tours tours={tours} />
+      <Tours tours={tours} removeTour={removeTour} />
     </main>
   );
 }
