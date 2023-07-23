@@ -6,34 +6,9 @@ function App() {
   const [index, setIndex] = useState<number>(0);
   const { name, job, image, text } = people[index];
 
-  const checkNumber = (num: number) => {
-    if (num > people.length - 1) {
-      return 0;
-    }
-    if (num < 0) {
-      return people.length - 1;
-    }
-    return num;
-  };
-  const nextPerson = () => {
-    setIndex((index: number) => {
-      const newIndex = index + 1;
-      return checkNumber(newIndex);
-    });
-  };
-  const prevPerson = () => {
-    setIndex((index: number) => {
-      const newIndex = index - 1;
-      return checkNumber(newIndex);
-    });
-  };
-  const randomPerson = () => {
-    let randomNumber = Math.floor(Math.random() * people.length);
-    if (randomNumber === index) {
-      randomNumber = index + 1;
-    }
-    setIndex(checkNumber(randomNumber));
-  };
+  const prevPerson = () => {};
+  const nextPerson = () => {};
+  const randomPerson = () => {};
 
   return (
     <main>
@@ -44,7 +19,7 @@ function App() {
             <FaQuoteRight />
           </span>
         </div>
-        <div className="author">{name}</div>
+        <h4 className="author">{name}</h4>
         <p className="job">{job}</p>
         <p className="info">{text}</p>
         <div className="btn-container">
@@ -62,5 +37,3 @@ function App() {
     </main>
   );
 }
-
-export default App;
