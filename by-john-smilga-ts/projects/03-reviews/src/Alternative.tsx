@@ -6,9 +6,22 @@ function App() {
   const [index, setIndex] = useState<number>(0);
   const { name, job, image, text } = people[index];
 
-  const prevPerson = () => {};
-  const nextPerson = () => {};
-  const randomPerson = () => {};
+  const nextPerson = () => {
+    setIndex((index) => (index + 1) % people.length);
+  };
+
+  const prevPerson = () => {
+    setIndex((index) => (index - 1 + people.length) % people.length);
+  };
+
+  const randomPerson = () => {
+    let randomNumber = Math.floor(Math.random() * people.length);
+    if (randomNumber === index) {
+      randomNumber = index + 1;
+    }
+    const newIndex = randomNumber % people.length;
+    setIndex(newIndex);
+  };
 
   return (
     <main>
