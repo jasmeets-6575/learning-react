@@ -5,3 +5,6 @@ export type TourType = {
   image: string;
   price: number;
 };
+export type ToursProps = {
+  tours: TourType[];
+};
