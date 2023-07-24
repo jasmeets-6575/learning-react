@@ -38,7 +38,7 @@ function App() {
         currentItem={currentItem}
         setCurrentItem={setCurrentItem}
       />
-      <JobInfo jobs={jobs} />
+      <JobInfo jobs={jobs} currentItem={currentItem} />
     </section>
   );
 }

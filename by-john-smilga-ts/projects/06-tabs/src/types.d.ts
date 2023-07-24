@@ -9,6 +9,7 @@ export type JobsType = {
 
 export type JobInfoProps = {
   jobs: JobsType[];
+  currentItem: number;
 };
 
 export interface DutiesProps {

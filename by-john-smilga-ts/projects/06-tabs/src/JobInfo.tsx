@@ -1,8 +1,8 @@
 import Duties from "./Duties";
 import { JobInfoProps } from "./types";
 
-const JobInfo: React.FC<JobInfoProps> = ({ jobs }) => {
-  const { company, dates, duties, title } = jobs[0];
+const JobInfo: React.FC<JobInfoProps> = ({ jobs, currentItem }) => {
+  const { company, dates, duties, title } = jobs[currentItem];
 
   return (
     <article className="job-info">
