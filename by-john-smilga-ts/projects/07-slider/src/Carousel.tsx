@@ -5,7 +5,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { PeopleType } from "./types";
 
 const Carousel = () => {
-  const [people, setPeople] = useState<PeopleType[]>(shortList);
+  const [people, setPeople] = useState<PeopleType[]>(longList);
   const [currentPerson, setCurrentPerson] = useState<number>(0);
 
   const prevSlide = () => {
@@ -20,6 +20,15 @@ const Carousel = () => {
       return result;
     });
   };
+
+  useEffect(() => {
+    let sliderId = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => {
+      clearInterval(sliderId);
+    };
+  }, [currentPerson]);
 
   return (
     <section className="slider-container">
