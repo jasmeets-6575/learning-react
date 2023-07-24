@@ -1,5 +1,5 @@
 import Carousel from "./Carousel";
-import SlickCarousel from "./SlickCarousel";
+// import SlickCarousel from "./SlickCarousel";
 
 function App() {
   return (
