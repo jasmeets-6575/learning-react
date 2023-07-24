@@ -29,7 +29,11 @@ const Carousel = () => {
           <article
             className="slide"
             key={id}
-            style={{ transform: `translateX(${100 * personIndex}%)` }}
+            style={{
+              transform: `translateX(${100 * (personIndex - currentPerson)}%)`,
+              opacity: personIndex === currentPerson ? 1 : 0,
+              visibility: personIndex === currentPerson ? "visible" : "hidden",
+            }}
           >
             <img src={image} alt={name} className="person-img" />
             <h5 className="name">{name}</h5>
