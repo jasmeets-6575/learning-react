@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { JobsType } from "./types";
+import BtnContainer from "./BtnContainer";
+import JobInfo from "./JobInfo";
 
 const url = "https://course-api.com/react-tabs-project";
 
@@ -29,7 +31,16 @@ function App() {
       </section>
     );
   }
-  return <h1>Hello world</h1>;
+  return (
+    <section className="jobs-center">
+      <BtnContainer
+        jobs={jobs}
+        currentItem={currentItem}
+        setCurrentItem={setCurrentItem}
+      />
+      <JobInfo jobs={jobs} />
+    </section>
+  );
 }
 
 export default App;
