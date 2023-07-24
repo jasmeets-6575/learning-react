@@ -1,5 +1,13 @@
-function App() {
-  return <h1>heelo world</h1>;
-}
+import ColorList from "./ColorList";
+import Form from "./Form";
+
+const App = () => {
+  return (
+    <main>
+      <Form />
+      <ColorList />
+    </main>
+  );
+};
 
 export default App;
