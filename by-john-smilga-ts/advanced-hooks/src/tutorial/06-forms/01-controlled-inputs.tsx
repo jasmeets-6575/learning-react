@@ -1,13 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-const ControlledInputs = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+import React, { useState, ChangeEvent, FormEvent } from "react";
+
+const ControlledInputs: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // do something
     console.log(name, email);
   };
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <h4>controlled inputs</h4>
@@ -45,4 +47,5 @@ const ControlledInputs = () => {
     </form>
   );
 };
+
 export default ControlledInputs;
