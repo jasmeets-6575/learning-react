@@ -6,15 +6,31 @@ import { PeopleType } from "./types";
 
 const Carousel = () => {
   const [people, setPeople] = useState<PeopleType[]>(shortList);
+  const [currentPerson, setCurrentPerson] = useState<number>(0);
 
-  const prevSlide = () => {};
-  const nextSlide = () => {};
+  const prevSlide = () => {
+    setCurrentPerson((oldPerson) => {
+      const result = (oldPerson - 1 + people.length) % people.length;
+      return result;
+    });
+  };
+  const nextSlide = () => {
+    setCurrentPerson((oldPerson) => {
+      const result = (oldPerson + 1) % people.length;
+      return result;
+    });
+  };
+
   return (
     <section className="slider-container">
-      {people.map((person) => {
+      {people.map((person, personIndex) => {
         const { id, image, name, title, quote } = person;
         return (
-          <article className="slide" key={id}>
+          <article
+            className="slide"
+            key={id}
+            style={{ transform: `translateX(${100 * personIndex}%)` }}
+          >
             <img src={image} alt={name} className="person-img" />
             <h5 className="name">{name}</h5>
             <p className="title">{title}</p>
