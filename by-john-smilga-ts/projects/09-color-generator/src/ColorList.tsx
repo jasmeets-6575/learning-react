@@ -1,19 +1,10 @@
 import SingleColor from "./SingleColor";
 import { nanoid } from "nanoid";
 
-interface ColorValue {
-  hex: string;
-  rgb: string;
-}
-
-interface ColorListProps {
-  colors: ColorValue[];
-}
-
-const ColorList: React.FC<ColorListProps> = ({ colors }) => {
+const ColorList: React.FC<any> = ({ colors }) => {
   return (
     <section className="colors">
-      {colors.map((color, index) => {
+      {colors.map((color: any, index: number) => {
         return <SingleColor key={nanoid()} color={color} index={index} />;
       })}
     </section>
