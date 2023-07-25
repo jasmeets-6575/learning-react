@@ -1,17 +1,5 @@
-import React from "react";
 import SingleItem from "./SingleItem";
-
-interface Item {
-  id: number;
-  name: string;
-  completed: boolean;
-}
-
-interface ItemsProps {
-  items: Item[];
-  removeItem: (id: number) => void;
-  editItem: (id: number) => void;
-}
+import { ItemsProps } from "./Types";
 
 const Items: React.FC<ItemsProps> = ({ items, removeItem, editItem }) => {
   return (
@@ -29,5 +17,4 @@ const Items: React.FC<ItemsProps> = ({ items, removeItem, editItem }) => {
     </div>
   );
 };
-
 export default Items;

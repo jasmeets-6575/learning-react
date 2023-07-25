@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
+import { FormType } from "./Types";
 
-interface FormProps {
-  addItem: (itemName: string) => void;
-}
-
-const Form: React.FC<FormProps> = ({ addItem }) => {
+const Form: React.FC<FormType> = ({ addItem }) => {
   const [newItemName, setNewItemName] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newItemName) {
       toast.error("please provide value");
@@ -23,10 +20,12 @@ const Form: React.FC<FormProps> = ({ addItem }) => {
       <h4>grocery bud</h4>
       <div className="form-control">
         <input
-          type="text"
+          type="text "
           className="form-input"
           value={newItemName}
-          onChange={(event) => setNewItemName(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setNewItemName(event.target.value)
+          }
         />
         <button type="submit" className="btn">
           add item
@@ -35,5 +34,4 @@ const Form: React.FC<FormProps> = ({ addItem }) => {
     </form>
   );
 };
-
 export default Form;

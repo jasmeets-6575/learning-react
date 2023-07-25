@@ -3,14 +3,9 @@ import Form from "./Form";
 import { nanoid } from "nanoid";
 import Items from "./Items";
 import { ToastContainer, toast } from "react-toastify";
+import { ItemType } from "./Types";
 
-interface TodoItem {
-  name: string;
-  completed: boolean;
-  id: string;
-}
-
-const getLocalStorage = (): TodoItem[] => {
+const getLocalStorage = (): ItemType[] => {
   let list = localStorage.getItem("list");
   if (list) {
     return JSON.parse(list);
@@ -19,36 +14,36 @@ const getLocalStorage = (): TodoItem[] => {
   }
 };
 
-const setLocalStorage = (items: TodoItem[]): void => {
+const setLocalStorage = (items: ItemType[]) => {
   localStorage.setItem("list", JSON.stringify(items));
 };
 
 const App: React.FC = () => {
-  const [items, setItems] = useState<TodoItem[]>(getLocalStorage);
+  const [items, setItems] = useState<ItemType[]>(getLocalStorage);
 
-  const addItem = (itemName: string): void => {
-    const newItem: TodoItem = {
+  const addItem = (itemName: string) => {
+    const newItem = {
       name: itemName,
       completed: false,
       id: nanoid(),
     };
-    const newItems: TodoItem[] = [...items, newItem];
+    const newItems = [...items, newItem];
     setItems(newItems);
     setLocalStorage(newItems);
     toast.success("item added to the list");
   };
 
-  const removeItem = (itemId: string): void => {
-    const newItems: TodoItem[] = items.filter((item) => item.id !== itemId);
+  const removeItem = (itemId: string) => {
+    const newItems = items.filter((item) => item.id !== itemId);
     setItems(newItems);
     setLocalStorage(newItems);
     toast.success("item deleted");
   };
 
-  const editItem = (itemId: string): void => {
-    const newItems: TodoItem[] = items.map((item) => {
+  const editItem = (itemId: string) => {
+    const newItems = items.map((item) => {
       if (item.id === itemId) {
-        const newItem: TodoItem = { ...item, completed: !item.completed };
+        const newItem = { ...item, completed: !item.completed };
         return newItem;
       }
       return item;
@@ -56,10 +51,6 @@ const App: React.FC = () => {
     setItems(newItems);
     setLocalStorage(newItems);
   };
-
-  useEffect(() => {
-    setLocalStorage(items);
-  }, [items]);
 
   return (
     <section className="section-center">
