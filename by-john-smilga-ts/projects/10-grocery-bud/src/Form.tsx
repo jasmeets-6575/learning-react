@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface FormProps {
   addItem: (itemName: string) => void;
@@ -9,6 +10,10 @@ const Form: React.FC<FormProps> = ({ addItem }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!newItemName) {
+      toast.error("please provide value");
+      return;
+    }
     addItem(newItemName);
     setNewItemName("");
   };
