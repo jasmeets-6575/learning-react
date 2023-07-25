@@ -1,10 +1,13 @@
 import { FormEvent, useState } from "react";
 
-const Form = () => {
+const Form: React.FC<{ addColor: (color: string) => void }> = ({
+  addColor,
+}) => {
   const [color, setColor] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    addColor(color);
   };
 
   return (
