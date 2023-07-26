@@ -1,5 +1,9 @@
-function App() {
-  return <h1>Navbar</h1>;
-}
-
+import Navbar from "./Navbar";
+const App = () => {
+  return (
+    <main>
+      <Navbar />
+    </main>
+  );
+};
 export default App;
