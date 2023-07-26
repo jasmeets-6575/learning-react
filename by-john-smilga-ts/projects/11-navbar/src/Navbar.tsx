@@ -1,22 +1,38 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { links, social } from "./data";
 import logo from "./logo.svg";
-const Navbar = () => {
+
+const Navbar: React.FC = () => {
   const [showLinks, setShowLinks] = useState(false);
+  const linksContainerRef = useRef<HTMLDivElement | null>(null);
+  const linksRef = useRef<HTMLUListElement | null>(null);
+
+  useEffect(() => {
+    const linkHeight = linksRef.current?.getBoundingClientRect().height;
+    if (linkHeight) {
+      const height = showLinks ? `${linkHeight}px` : "0px";
+      linksContainerRef.current?.style.setProperty("height", height);
+    }
+  }, [showLinks]);
 
   return (
     <nav>
       <div className="nav-center">
         <div className="nav-header">
-          <img src={logo} className="logo" alt="logo" />
-          <button className="nav-toggle">
+          <img src={logo} alt="logo" className="logo" />
+          <button
+            className="nav-toggle"
+            onClick={() => {
+              setShowLinks(!showLinks);
+            }}
+          >
             <FaBars />
           </button>
         </div>
 
-        <div className="links-container">
-          <ul className="links">
+        <div className="links-container" ref={linksContainerRef}>
+          <ul className="links" ref={linksRef}>
             {links.map((link) => {
               const { id, url, text } = link;
               return (
@@ -27,8 +43,8 @@ const Navbar = () => {
             })}
           </ul>
         </div>
-        {/* social links */}
-        <ul className="social-icons">
+
+        <div className="social-icons">
           {social.map((socialIcon) => {
             const { id, url, icon } = socialIcon;
             return (
@@ -37,9 +53,10 @@ const Navbar = () => {
               </li>
             );
           })}
-        </ul>
+        </div>
       </div>
     </nav>
   );
 };
+
 export default Navbar;
