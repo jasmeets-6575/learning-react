@@ -1,22 +1,11 @@
-interface Person {
-  id: number;
-  name: string;
-  nickName?: string;
-  images?: {
-    small: {
-      url: string;
-    };
-  }[];
-}
-
-export const data: Person[] = [
+export const data = [
   { id: 1, name: "john" },
   { id: 2, name: "peter" },
   { id: 3, name: "susan" },
   { id: 4, name: "anna" },
 ];
 
-export const people: Person[] = [
+export const people = [
   { id: 1, name: "bob", nickName: "Stud Muffin" },
   { id: 2, name: "peter" },
   {
