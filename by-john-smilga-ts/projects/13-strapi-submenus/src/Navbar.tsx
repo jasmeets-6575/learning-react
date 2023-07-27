@@ -5,8 +5,15 @@ import NavLinks from "./NavLinks";
 const Navbar = () => {
   const { openSidebar, setPageId } = useGlobalContext();
 
+  const handleSubmenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const targetElement = e.target as HTMLElement;
+    if (!targetElement.classList.contains("nav-link")) {
+      setPageId(null);
+    }
+  };
+
   return (
-    <nav>
+    <nav onMouseOver={handleSubmenu}>
       <div className="nav-center">
         <h3 className="logo">strapi</h3>
         <button className="toggle-btn" onClick={openSidebar}>
