@@ -1,48 +1,45 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  ReactElement,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { createContext, useState, useContext, ReactNode } from "react";
 
-interface AppContextValueType {
+// Define the types for the context and state values
+type ContextType = {
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;
-  pageId: number | null;
-  setPageId: Dispatch<SetStateAction<null>>;
-}
-const AppContext = createContext<AppContextValueType>(
-  {} as AppContextValueType
-);
+  pageId: string | null; // Replace 'number' with the appropriate type for your 'pageId'
+  setPageId: (id: string | null) => void; // Replace 'number' with the appropriate type for your 'pageId'
+};
 
-type ChildrenProps = { children?: ReactElement | ReactElement[] };
-export const AppProvider = ({ children }: ChildrenProps): ReactElement => {
+const AppContext = createContext<ContextType>({
+  isSidebarOpen: false,
+  openSidebar: () => {},
+  closeSidebar: () => {},
+  pageId: null,
+  setPageId: () => {},
+});
+
+export const AppProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [pageId, setPageId] = useState(null);
+  const [pageId, setPageId] = useState<string | null>(null); // Replace 'number' with the appropriate type for your 'pageId'
+
   const openSidebar = () => {
     setIsSidebarOpen(true);
   };
+
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-  const AppContextValue: AppContextValueType = {
-    isSidebarOpen,
-    openSidebar,
-    closeSidebar,
-    pageId,
-    setPageId,
-  };
 
   return (
-    <AppContext.Provider value={AppContextValue}>
+    <AppContext.Provider
+      value={{ isSidebarOpen, openSidebar, closeSidebar, pageId, setPageId }}
+    >
       {children}
     </AppContext.Provider>
   );
 };
 
-export const useGlobalContext = (): AppContextValueType => {
+export const useGlobalContext = () => {
   return useContext(AppContext);
 };
