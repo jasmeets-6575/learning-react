@@ -18,7 +18,7 @@ const AppContext = createContext<AppContextValueType>(
   {} as AppContextValueType
 );
 
-type ChildrenProps = { children: ReactElement | ReactElement[] };
+type ChildrenProps = { children?: ReactElement | ReactElement[] };
 export const AppProvider = ({ children }: ChildrenProps): ReactElement => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [pageId, setPageId] = useState(null);
