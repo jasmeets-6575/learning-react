@@ -1,5 +1,12 @@
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-const CartItem = ({ id, img, title, price, amount }) => {
+type CartItemProps = {
+  id: string;
+  img: string;
+  title: string;
+  price: string;
+  amount: number;
+};
+const CartItem = ({ id, img, title, price, amount }: CartItemProps) => {
   return (
     <article className="cart-item">
       <img src={img} alt={title} />

@@ -3,7 +3,8 @@ import { useGlobalContext } from "./context";
 const CartContainer = () => {
   const { cart } = useGlobalContext();
 
-  const cartArray = Array.from(cart.entries());
+  const cartArray = Array.from(cart);
+  console.log(cartArray);
 
   if (cartArray.length === 0) {
     return (
@@ -25,8 +26,9 @@ const CartContainer = () => {
       {/* cart items */}
       <div>
         {cartArray.map((cartItem) => {
-          const { id, item } = cartItem;
-          return <CartItem key={id} {...item} />;
+          console.log(cartItem[1]);
+
+          return <CartItem key={cartItem[0]} {...cartItem[1]} />;
         })}
       </div>
       {/* cart footer */}
