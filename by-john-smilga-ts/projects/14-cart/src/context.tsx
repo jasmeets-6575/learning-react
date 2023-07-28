@@ -1,4 +1,10 @@
-import { useContext, useReducer, createContext, ReactElement } from "react";
+import {
+  useContext,
+  useReducer,
+  createContext,
+  ReactElement,
+  useEffect,
+} from "react";
 import cartItems from "./data";
 import { getTotals } from "./utils";
 
@@ -10,7 +16,7 @@ export type CartItemsType = {
   amount: number;
 };
 
-// const url = "https://www.course-api.com/react-useReducer-cart-project";
+const url = "https://www.course-api.com/react-useReducer-cart-project";
 
 export type InitCartStateCart = Map<string, CartItemsType>;
 
@@ -77,6 +83,17 @@ const reducer = (
       }
     }
   }
+  if (action.type === REDUCER_ACTION_TYPE.LOADING) {
+    return { ...state, loading: true };
+  }
+  // if (action.type === REDUCER_ACTION_TYPE.DISPLAY_ITEMS) {
+  //   if (action.payload) {
+  //     const newCart = new Map(
+  //       action.payload.cart.map((item) => [item.id, item])
+  //     );
+  //     return { ...state, loading: false, cart: newCart };
+  //   }
+  // }
   throw new Error(`no matching action type : ${action.type}`);
 };
 
@@ -133,6 +150,24 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     totalAmount,
     totalCost,
   };
+  // const fetchData = async () => {
+  //   try {
+  //     dispatch({ type: REDUCER_ACTION_TYPE.LOADING });
+  //     const response = await fetch(url);
+  //     const cart = await response.json();
+  //     dispatch({
+  //       type: REDUCER_ACTION_TYPE.DISPLAY_ITEMS,
+  //       payload: { cart },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+
+  //     throw new Error("Data is not being loaded");
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   return (
     <AppContext.Provider value={AppContextValue}>
       {children}
