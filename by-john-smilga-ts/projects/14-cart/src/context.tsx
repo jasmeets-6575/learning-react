@@ -11,15 +11,12 @@ export type CartItemsType = {
 
 // const url = "https://www.course-api.com/react-useReducer-cart-project";
 
-type InitCartStateCart = [
-  string,
-  { id: string; title: string; price: string; img: string; amount: number }
-][];
+type InitCartStateCart = Map<string, CartItemsType>;
 
 type CartStateType = { cart: InitCartStateCart; loading: boolean };
 const initCartState: CartStateType = {
   loading: false,
-  cart: cartItems.map((item) => [item.id, item]),
+  cart: new Map(cartItems.map((item) => [item.id, item])),
 };
 
 const REDUCER_ACTION_TYPE = {
@@ -42,7 +39,14 @@ const reducer = (
   action: ReducerAction
 ): CartStateType => {
   if (action.type === REDUCER_ACTION_TYPE.CLEAR_CART) {
-    return { ...state, cart: [] };
+    return { ...state, cart: new Map() };
+  }
+  if (action.type === REDUCER_ACTION_TYPE.REMOVE) {
+    const newCart = new Map(state.cart);
+    if (action.payload) {
+      newCart.delete(action.payload?.id);
+    }
+    return { ...state, cart: newCart };
   }
   throw new Error(`no matching action type : ${action.type}`);
 };
@@ -50,9 +54,17 @@ const reducer = (
 type AppContextType = {
   cart: InitCartStateCart;
   loading: boolean;
-  clearCart?: () => void;
+  clearCart: () => void;
+  removeItem: (id: string) => void;
 };
-const AppContext = createContext<AppContextType>(initCartState);
+const AppContextInit: AppContextType = {
+  loading: false,
+  cart: new Map(),
+  clearCart: () => {},
+  removeItem: () => {},
+};
+
+const AppContext = createContext<AppContextType>(AppContextInit);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
@@ -61,7 +73,12 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const clearCart = () => {
     dispatch({ type: REDUCER_ACTION_TYPE.CLEAR_CART });
   };
-  const AppContextValue: AppContextType = { ...state, clearCart };
+  const removeItem = (id: string) => {
+    const { cart } = state;
+    dispatch({ type: REDUCER_ACTION_TYPE.REMOVE, payload: cart.get(id) });
+  };
+
+  const AppContextValue: AppContextType = { ...state, clearCart, removeItem };
   return (
     <AppContext.Provider value={AppContextValue}>
       {children}
