@@ -1,5 +1,13 @@
+import Navbar from "./Navbar";
+import CartContainer from "./CartContainer";
+
 function App() {
-  return <h1>Hello world</h1>;
+  return (
+    <main>
+      <Navbar />
+      <CartContainer />
+    </main>
+  );
 }
 
 export default App;
