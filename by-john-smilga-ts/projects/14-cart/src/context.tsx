@@ -1,6 +1,7 @@
 import { useContext, useReducer, createContext, ReactElement } from "react";
+import cartItems from "./data";
 
-export type CartitemsType = {
+export type CartItemsType = {
   id: string;
   title: string;
   price: string;
@@ -9,10 +10,17 @@ export type CartitemsType = {
 };
 
 const url = "https://www.course-api.com/react-useReducer-cart-project";
-const AppContext = createContext<CartitemsType>({} as CartitemsType);
+const AppContext = createContext<CartItemsType>({} as CartItemsType);
 
-type CartStateType = { cart: []; loading: boolean };
-const initCartState: CartStateType = { cart: [], loading: false };
+type InitCartStateCart = [
+  number,
+  { id: number; name: string; price: number }
+][];
+type CartStateType = { cart: InitCartStateCart; loading: boolean };
+const initCartState: CartStateType = {
+  cart: cartItems.map((item) => [parseInt(item.id), item]),
+  loading: false,
+};
 
 const REDUCER_ACTION_TYPE = {
   CLEAR_CART: "CLEAR_CART",
@@ -26,7 +34,7 @@ const REDUCER_ACTION_TYPE = {
 export type ReducerActionType = typeof REDUCER_ACTION_TYPE;
 export type ReducerAction = {
   type: string;
-  payload?: CartitemsType;
+  payload?: CartItemsType;
 };
 
 const reducer = (
@@ -42,7 +50,7 @@ type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initCartState);
-  const AppContextValue = {};
+  const AppContextValue = { ...state };
   return (
     <AppContext.Provider value={AppContextValue}>
       {children}
