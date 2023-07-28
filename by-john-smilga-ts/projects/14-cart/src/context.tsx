@@ -5,7 +5,7 @@ import { getTotals } from "./utils";
 export type CartItemsType = {
   id: string;
   title: string;
-  price: string;
+  price: number;
   img: string;
   amount: number;
 };
