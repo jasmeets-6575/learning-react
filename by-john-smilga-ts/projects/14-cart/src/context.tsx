@@ -1,5 +1,6 @@
 import { useContext, useReducer, createContext, ReactElement } from "react";
 import cartItems from "./data";
+import { getTotals } from "./utils";
 
 export type CartItemsType = {
   id: string;
@@ -11,7 +12,7 @@ export type CartItemsType = {
 
 // const url = "https://www.course-api.com/react-useReducer-cart-project";
 
-type InitCartStateCart = Map<string, CartItemsType>;
+export type InitCartStateCart = Map<string, CartItemsType>;
 
 type CartStateType = { cart: InitCartStateCart; loading: boolean };
 const initCartState: CartStateType = {
@@ -86,6 +87,8 @@ type AppContextType = {
   removeItem: (id: string) => void;
   increase: (id: string) => void;
   decrease: (id: string) => void;
+  totalAmount: number;
+  totalCost: number;
 };
 const AppContextInit: AppContextType = {
   loading: false,
@@ -94,6 +97,8 @@ const AppContextInit: AppContextType = {
   removeItem: () => {},
   increase: () => {},
   decrease: () => {},
+  totalAmount: 0,
+  totalCost: 0,
 };
 
 const AppContext = createContext<AppContextType>(AppContextInit);
@@ -101,6 +106,7 @@ const AppContext = createContext<AppContextType>(AppContextInit);
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const [state, dispatch] = useReducer(reducer, initCartState);
+  const { totalAmount, totalCost } = getTotals(state.cart);
 
   const clearCart = () => {
     dispatch({ type: REDUCER_ACTION_TYPE.CLEAR_CART });
@@ -124,6 +130,8 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     removeItem,
     increase,
     decrease,
+    totalAmount,
+    totalCost,
   };
   return (
     <AppContext.Provider value={AppContextValue}>
