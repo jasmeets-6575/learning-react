@@ -45,9 +45,22 @@ const reducer = (
     const newCart = new Map(state.cart);
     if (action.payload) {
       newCart.delete(action.payload?.id);
+      return { ...state, cart: newCart };
     }
-    return { ...state, cart: newCart };
   }
+  if (action.type === REDUCER_ACTION_TYPE.INCREASE) {
+    const newCart = new Map(state.cart);
+    if (action.payload) {
+      const itemId = action.payload.id;
+      const item = newCart.get(itemId);
+      if (item) {
+        const newItem = { ...item, amount: item.amount + 1 };
+        newCart.set(itemId, newItem);
+        return { ...state, cart: newCart };
+      }
+    }
+  }
+
   throw new Error(`no matching action type : ${action.type}`);
 };
 
@@ -56,12 +69,16 @@ type AppContextType = {
   loading: boolean;
   clearCart: () => void;
   removeItem: (id: string) => void;
+  increase: (id: string) => void;
+  decrease: (id: string) => void;
 };
 const AppContextInit: AppContextType = {
   loading: false,
   cart: new Map(),
   clearCart: () => {},
   removeItem: () => {},
+  increase: () => {},
+  decrease: () => {},
 };
 
 const AppContext = createContext<AppContextType>(AppContextInit);
@@ -77,8 +94,22 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
     const { cart } = state;
     dispatch({ type: REDUCER_ACTION_TYPE.REMOVE, payload: cart.get(id) });
   };
+  const increase = (id: string) => {
+    const { cart } = state;
+    dispatch({ type: REDUCER_ACTION_TYPE.INCREASE, payload: cart.get(id) });
+  };
+  const decrease = (id: string) => {
+    const { cart } = state;
+    dispatch({ type: REDUCER_ACTION_TYPE.DECREASE, payload: cart.get(id) });
+  };
 
-  const AppContextValue: AppContextType = { ...state, clearCart, removeItem };
+  const AppContextValue: AppContextType = {
+    ...state,
+    clearCart,
+    removeItem,
+    increase,
+    decrease,
+  };
   return (
     <AppContext.Provider value={AppContextValue}>
       {children}
