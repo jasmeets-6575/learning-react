@@ -1,6 +1,30 @@
 import { useEffect } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
+
+interface RandomUserResponse {
+  results: Array<{
+    name: {
+      first: string;
+      last: string;
+    };
+    email: string;
+    picture: {
+      large: string;
+      medium: string;
+      thumbnail: string;
+    };
+  }>;
+}
+
 const productsUrl = "https://course-api.com/react-store-products";
 const randomUserUrl = "https://randomuser.me/api";
 
