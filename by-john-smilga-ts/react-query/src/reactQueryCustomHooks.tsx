@@ -10,7 +10,7 @@ interface Task {
 
 // useFetchTasks hook
 export const useFetchTasks = () => {
-  const { isLoading, data, isError, error } = useQuery<Task[], Error>({
+  const { isLoading, data, isError } = useQuery<Task[], Error>({
     queryKey: ["tasks"],
     queryFn: async () => {
       const { data } = await customFetch.get<Task[]>("/");
