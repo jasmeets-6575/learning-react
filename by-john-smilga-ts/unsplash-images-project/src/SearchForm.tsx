@@ -1,11 +1,13 @@
+import { useRef } from "react";
 import { useGlobalContext } from "./context";
 
 const SearchForm = () => {
   const { setSearchTerm } = useGlobalContext();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const searchValue = (e.target as HTMLFormElement).elements.search.value;
+    const searchValue = searchInputRef.current?.value ?? "";
     if (!searchValue) return;
     setSearchTerm(searchValue);
   };
