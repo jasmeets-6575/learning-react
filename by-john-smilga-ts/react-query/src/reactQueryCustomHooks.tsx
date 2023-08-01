@@ -42,3 +42,29 @@ export const useCreateTask = () => {
 
   return { createTask, isLoading };
 };
+
+// useEditTask hook
+export const useEditTask = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate: editTask } = useMutation<
+    void,
+    Error,
+    { taskId: number; isDone: boolean }
+  >(
+    async ({ taskId, isDone }) => {
+      try {
+        await customFetch.patch(`/${taskId}`, { isDone });
+      } catch (error) {
+        throw new Error("An error occurred while updating the task.");
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      },
+    }
+  );
+
+  return { editTask };
+};
