@@ -19,3 +19,26 @@ export const useFetchTasks = () => {
   });
   return { isLoading, isError, data };
 };
+
+// useCreateTask hook
+export const useCreateTask = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate: createTask, isLoading } = useMutation<Task, Error, string>(
+    async (taskTitle: string) => {
+      const { data } = await customFetch.post<Task>("/", { title: taskTitle });
+      return data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["tasks"] });
+        toast.success("task added");
+      },
+      onError: (error) => {
+        toast.error(error.message ?? "An error occurred.");
+      },
+    }
+  );
+
+  return { createTask, isLoading };
+};
