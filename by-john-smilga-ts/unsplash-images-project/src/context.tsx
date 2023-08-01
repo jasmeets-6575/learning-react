@@ -22,16 +22,16 @@ const getInitialDarkMode = (): boolean => {
   const storedDarkMode = localStorage.getItem("darkTheme") === "true";
   return storedDarkMode || prefersDarkMode;
 };
-
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const AppProvider = ({ children }: ChildrenType): ReactElement => {
-  const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(getInitialDarkMode());
   const [searchTerm, setSearchTerm] = useState<string>("cat");
 
   const toggleDarkTheme = () => {
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme);
+    localStorage.setItem("darkTheme", String(newDarkTheme));
   };
 
   useEffect(() => {
@@ -49,4 +49,11 @@ export const AppProvider = ({ children }: ChildrenType): ReactElement => {
     <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   );
 };
-export const useGlobalContext = () => useContext(AppContext);
+
+export const useGlobalContext = (): AppContextType => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useGlobalContext must be used within an AppProvider");
+  }
+  return context;
+};
