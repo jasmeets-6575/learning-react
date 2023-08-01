@@ -1,4 +1,4 @@
-import React from "react";
+import { useDeleteTask, useEditTask } from "./reactQueryCustomHooks";
 
 interface Item {
   id: string;
@@ -11,17 +11,20 @@ interface SingleItemProps {
 }
 
 const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
+  const { editTask } = useEditTask();
+  const { deleteTask, deleteTaskLoading } = useDeleteTask();
+
   return (
     <div className="single-item">
       <input
         type="checkbox"
         checked={item.isDone}
-        onChange={() => console.log("edit task")}
+        onChange={() => editTask({ taskId: item.id, isDone: !item.isDone })}
       />
       <p
         style={{
           textTransform: "capitalize",
-          textDecoration: item.isDone ? "line-through" : "none", // Adjusted to set "line-through" when 'isDone' is true, otherwise "none"
+          textDecoration: item.isDone ? "line-through" : "none",
         }}
       >
         {item.title}
@@ -29,7 +32,8 @@ const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
       <button
         className="btn remove-btn"
         type="button"
-        onClick={() => console.log("delete task")}
+        disabled={deleteTaskLoading}
+        onClick={() => deleteTask(item.id)}
       >
         delete
       </button>

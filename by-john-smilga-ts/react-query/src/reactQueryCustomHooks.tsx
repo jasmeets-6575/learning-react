@@ -3,7 +3,7 @@ import customFetch from "./utils";
 import { toast } from "react-toastify";
 
 interface Task {
-  id: number;
+  id: string;
   title: string;
   isDone: boolean;
 }
@@ -50,7 +50,7 @@ export const useEditTask = () => {
   const { mutate: editTask } = useMutation<
     void,
     Error,
-    { taskId: number; isDone: boolean }
+    { taskId: string; isDone: boolean }
   >(
     async ({ taskId, isDone }) => {
       try {
@@ -76,9 +76,9 @@ export const useDeleteTask = () => {
   const { mutate: deleteTask, isLoading: deleteTaskLoading } = useMutation<
     void,
     Error,
-    number
+    string
   >(
-    async (taskId: number) => {
+    async (taskId: string) => {
       try {
         await customFetch.delete(`/${taskId}`);
       } catch (error) {
