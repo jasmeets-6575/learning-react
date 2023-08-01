@@ -68,3 +68,29 @@ export const useEditTask = () => {
 
   return { editTask };
 };
+
+// useDeleteTask hook
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteTask, isLoading: deleteTaskLoading } = useMutation<
+    void,
+    Error,
+    number
+  >(
+    async (taskId: number) => {
+      try {
+        await customFetch.delete(`/${taskId}`);
+      } catch (error) {
+        throw new Error("An error occurred while deleting the task.");
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      },
+    }
+  );
+
+  return { deleteTask, deleteTaskLoading };
+};
