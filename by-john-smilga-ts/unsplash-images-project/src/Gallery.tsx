@@ -28,6 +28,21 @@ const Gallery = () => {
     },
   });
 
+  if (response.isLoading) {
+    return (
+      <section className="image-container">
+        <h4>Loading...</h4>
+      </section>
+    );
+  }
+  if (response.isError) {
+    return (
+      <section className="image-container">
+        <h4>There was an error...</h4>
+      </section>
+    );
+  }
+
   const results = response.data?.results ?? [];
   if (results.length < 1) {
     return (
