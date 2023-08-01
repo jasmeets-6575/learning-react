@@ -20,6 +20,22 @@ type ApiResponse = {
 
 const Gallery = () => {
   const { searchTerm } = useGlobalContext();
+  const response = useQuery<ApiResponse>({
+    queryKey: ["images", searchTerm],
+    queryFn: async () => {
+      const result = await axios.get<ApiResponse>(`${url}&query=${searchTerm}`);
+      return result.data;
+    },
+  });
+
+  const results = response.data?.results ?? [];
+  if (results.length < 1) {
+    return (
+      <section className="image-container">
+        <h4>No results found...</h4>
+      </section>
+    );
+  }
 
   return (
     <section className="image-container">
