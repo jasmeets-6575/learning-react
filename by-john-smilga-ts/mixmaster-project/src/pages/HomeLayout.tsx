@@ -7,8 +7,9 @@ const Homelayout = () => {
   return (
     <div>
       <Navbar />
-      <h1>Homelayout</h1>
-      <Outlet />
+      <section className="page">
+        <Outlet />
+      </section>
     </div>
   );
 };
