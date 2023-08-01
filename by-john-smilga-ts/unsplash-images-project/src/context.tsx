@@ -13,15 +13,30 @@ type AppContextType = {
   setSearchTerm: (term: string) => void;
 };
 
-const AppContext = createContext<AppContextType | null>(null);
+const AppContext = createContext<AppContextType>({} as AppContextType);
+
+const getInitialDarkMode = (): boolean => {
+  const prefersDarkMode = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
+  const storedDarkMode = localStorage.getItem("darkTheme") === "true";
+  return storedDarkMode || prefersDarkMode;
+};
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
 export const AppProvider = ({ children }: ChildrenType): ReactElement => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
   const [searchTerm, setSearchTerm] = useState<string>("cat");
 
-  const toggleDarkTheme = () => {};
+  const toggleDarkTheme = () => {
+    const newDarkTheme = !isDarkTheme;
+    setIsDarkTheme(newDarkTheme);
+  };
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-theme", isDarkTheme);
+  }, [isDarkTheme]);
 
   const contextValue: AppContextType = {
     isDarkTheme,
