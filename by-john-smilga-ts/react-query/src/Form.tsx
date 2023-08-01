@@ -1,11 +1,17 @@
 import { useState, FormEvent } from "react";
+import { useCreateTask } from "./reactQueryCustomHooks";
 
 const Form: React.FC = () => {
   const [newItemName, setNewItemName] = useState<string>(""); // Add type annotation for the state
+  const { createTask } = useCreateTask();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle the form submission logic here
+    createTask(newItemName, {
+      onSuccess: () => {
+        setNewItemName("");
+      },
+    });
   };
 
   return (
