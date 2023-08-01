@@ -1,5 +1,14 @@
-function App() {
-  return <h1>Hello world</h1>;
-}
+import Gallery from "./Gallery";
+import SearchForm from "./SearchForm";
+import ThemeToggle from "./ThemeToggle";
 
+const App = () => {
+  return (
+    <main>
+      <ThemeToggle />
+      <SearchForm />
+      <Gallery />
+    </main>
+  );
+};
 export default App;
