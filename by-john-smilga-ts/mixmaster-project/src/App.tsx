@@ -19,15 +19,18 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+        errorElement: <SinglePageError />,
         loader: landingLoader,
       },
       {
         path: "/cocktail",
+        errorElement: <SinglePageError />,
         element: <Cocktail />,
       },
       {
         path: "/newsletter",
         element: <Newsletter />,
+        errorElement: <SinglePageError />,
       },
       {
         path: "/about",
