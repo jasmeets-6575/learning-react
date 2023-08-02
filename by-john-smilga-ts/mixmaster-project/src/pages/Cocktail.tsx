@@ -35,7 +35,7 @@ export const loader = async ({
 
 const Cocktail: React.FC = () => {
   const { id, data } = useLoaderData<LoaderData>();
-
+  if (!data) return <Navigate to="/" />;
   const singleDrink: SingleDrinkType = data?.drinks[0] ?? {}; // Use nullish coalescing to handle 'data' being undefined or null
   const {
     strDrink: name,
