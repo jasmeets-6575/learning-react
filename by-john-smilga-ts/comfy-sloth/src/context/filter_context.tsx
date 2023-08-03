@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useReducer } from 'react'
-import reducer from '../reducers/filter_reducer'
+import React, { useEffect, useContext, useReducer, ReactElement } from "react";
+import reducer from "../reducers/filter_reducer";
 import {
   LOAD_PRODUCTS,
   SET_GRIDVIEW,
@@ -9,21 +9,23 @@ import {
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
-} from '../actions'
-import { useProductsContext } from './products_context'
+} from "../actions";
+import { useProductsContext } from "./products_context";
 
-const initialState = {}
+const initialState = {};
 
-const FilterContext = React.createContext()
+const FilterContext = React.createContext({});
 
-export const FilterProvider = ({ children }) => {
+type ChildrenType = { children?: ReactElement | ReactElement[] };
+
+export const AppProvider = ({ children }: ChildrenType): ReactElement => {
   return (
-    <FilterContext.Provider value='filter context'>
+    <FilterContext.Provider value="filter context">
       {children}
     </FilterContext.Provider>
-  )
-}
+  );
+};
 // make sure use
 export const useFilterContext = () => {
-  return useContext(FilterContext)
-}
+  return useContext(FilterContext);
+};

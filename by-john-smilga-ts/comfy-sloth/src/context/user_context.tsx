@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useAuth0 } from '@auth0/auth0-react'
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 
-const UserContext = React.createContext()
-export const UserProvider = ({ children }) => {
+const UserContext = React.createContext({});
+
+type ChildrenType = { children?: ReactElement | ReactElement[] };
+export const AppProvider = ({ children }: ChildrenType): ReactElement => {
   return (
-    <UserContext.Provider value='user context'>{children}</UserContext.Provider>
-  )
-}
+    <UserContext.Provider value="user context">{children}</UserContext.Provider>
+  );
+};
 // make sure use
 export const useUserContext = () => {
-  return useContext(UserContext)
-}
+  return useContext(UserContext);
+};
