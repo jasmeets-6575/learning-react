@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { ReactElement, useContext, useEffect, useReducer } from "react";
+
 import reducer from "../reducers/products_reducer";
 import { products_url as url } from "../utils/constants";
 import {
@@ -13,15 +14,39 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
 
-const initialState = {};
+export type IAppState = {
+  loading: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
+};
+const AppState = {
+  openSidebar: () => {},
+  closeSidebar: () => {},
+};
 
-const ProductsContext = React.createContext({});
+export type InitialStateType = {
+  isSidebarOpen: boolean;
+};
+const initialState = {
+  isSidebarOpen: false,
+};
+
+const ProductsContext = React.createContext<IAppState>({} as IAppState);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
+export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-export const AppProvider = ({ children }: ChildrenType): ReactElement => {
+  const openSidebar = () => {
+    dispatch({ type: SIDEBAR_OPEN });
+  };
+  const closeSidebar = () => {
+    dispatch({ type: SIDEBAR_CLOSE });
+  };
+
+  const appContextValue: IAppState = { openSidebar, closeSidebar };
   return (
-    <ProductsContext.Provider value="products context">
+    <ProductsContext.Provider value={appContextValue}>
       {children}
     </ProductsContext.Provider>
   );

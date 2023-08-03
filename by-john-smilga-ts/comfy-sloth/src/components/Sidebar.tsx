@@ -9,9 +9,12 @@ import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
 
 const Sidebar = () => {
+  const isSidebarOpen = false;
   return (
     <SidebarContainer>
-      <aside className="show-sidebar">
+      <aside
+        className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}
+      >
         <div className="sidebar-header">
           <img src={logo} className="logo" alt="coding addict" />
           <button className="close-btn">
@@ -26,6 +29,9 @@ const Sidebar = () => {
               </li>
             );
           })}
+          <li>
+            <Link to="/checkout">checkout</Link>
+          </li>
         </ul>
         <CartButtons />
       </aside>

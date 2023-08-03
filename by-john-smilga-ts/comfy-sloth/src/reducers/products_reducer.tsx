@@ -7,11 +7,16 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-} from '../actions'
+} from "../actions";
+import { InitialStateType } from "../context/products_context";
 
-const products_reducer = (state, action) => {
-  return state
-  throw new Error(`No Matching "${action.type}" - action type`)
-}
+type ActionType = {
+  type: string;
+  payload?: any;
+};
+const products_reducer = (state: InitialStateType, action: ActionType) => {
+  return state;
+  throw new Error(`No Matching "${action.type}" - action type`);
+};
 
-export default products_reducer
+export default products_reducer;
