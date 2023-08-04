@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { ReactElement, useContext, useEffect, useReducer } from "react";
-
 import reducer from "../reducers/products_reducer";
 import { products_url as url } from "../utils/constants";
 import {
@@ -14,21 +13,17 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
 
-export type IAppState = {
-  loading: boolean;
-  openSidebar: () => void;
-  closeSidebar: () => void;
-};
-const AppState = {
-  openSidebar: () => {},
-  closeSidebar: () => {},
-};
-
 export type InitialStateType = {
   isSidebarOpen: boolean;
 };
-const initialState = {
+const initialState: InitialStateType = {
   isSidebarOpen: false,
+};
+
+export type IAppState = {
+  isSidebarOpen: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
 };
 
 const ProductsContext = React.createContext<IAppState>({} as IAppState);
@@ -44,9 +39,14 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
 
-  const appContextValue: IAppState = { openSidebar, closeSidebar };
   return (
-    <ProductsContext.Provider value={appContextValue}>
+    <ProductsContext.Provider
+      value={{
+        ...state,
+        openSidebar,
+        closeSidebar,
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   );

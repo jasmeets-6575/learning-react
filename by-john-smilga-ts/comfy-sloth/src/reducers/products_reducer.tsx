@@ -15,7 +15,12 @@ type ActionType = {
   payload?: any;
 };
 const products_reducer = (state: InitialStateType, action: ActionType) => {
-  return state;
+  if (action.type === SIDEBAR_OPEN) {
+    return { ...state, isSidebarOpen: true };
+  }
+  if (action.type === SIDEBAR_CLOSE) {
+    return { ...state, isSidebarOpen: false };
+  }
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
