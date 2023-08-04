@@ -45,6 +45,9 @@ export type IAppState = {
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;
+  products_loading: boolean;
+  products_error: boolean;
+  featured_products: ProductType[];
 };
 
 const ProductsContext = React.createContext<IAppState>({} as IAppState);
