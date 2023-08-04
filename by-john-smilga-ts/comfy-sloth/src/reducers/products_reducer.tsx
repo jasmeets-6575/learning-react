@@ -8,18 +8,75 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
-import { InitialStateType } from "../context/products_context";
+import { InitialStateType, ProductType } from "../context/products_context";
 
-type ActionType = {
-  type: string;
-  payload?: any;
+type SidebarOpenAction = {
+  type: typeof SIDEBAR_OPEN;
 };
-const products_reducer = (state: InitialStateType, action: ActionType) => {
+
+type SidebarCloseAction = {
+  type: typeof SIDEBAR_CLOSE;
+};
+
+type GetProductsBeginAction = {
+  type: typeof GET_PRODUCTS_BEGIN;
+};
+
+type GetProductsSuccessAction = {
+  type: typeof GET_PRODUCTS_SUCCESS;
+  payload: ProductType[];
+};
+
+type GetProductsErrorAction = {
+  type: typeof GET_PRODUCTS_ERROR;
+};
+
+type GetSingleProductBeginAction = {
+  type: typeof GET_SINGLE_PRODUCT_BEGIN;
+};
+
+type GetSingleProductSuccessAction = {
+  type: typeof GET_SINGLE_PRODUCT_SUCCESS;
+  payload: ProductType;
+};
+
+type GetSingleProductErrorAction = {
+  type: typeof GET_SINGLE_PRODUCT_ERROR;
+};
+
+// Define the union type for all possible actions
+type ProductAction =
+  | SidebarOpenAction
+  | SidebarCloseAction
+  | GetProductsBeginAction
+  | GetProductsSuccessAction
+  | GetProductsErrorAction
+  | GetSingleProductBeginAction
+  | GetSingleProductSuccessAction
+  | GetSingleProductErrorAction;
+const products_reducer = (state: InitialStateType, action: ProductAction) => {
   if (action.type === SIDEBAR_OPEN) {
     return { ...state, isSidebarOpen: true };
   }
   if (action.type === SIDEBAR_CLOSE) {
     return { ...state, isSidebarOpen: false };
+  }
+  if (action.type === GET_PRODUCTS_BEGIN) {
+    return { ...state, products_loading: true };
+  }
+  if (action.type === GET_PRODUCTS_SUCCESS) {
+    const featured_products = action.payload?.filter(
+      (product) => product.featured === true
+    );
+    return {
+      ...state,
+      products_loading: false,
+      products: action.payload,
+      featured_products,
+    };
+  }
+  if (action.type === GET_PRODUCTS_ERROR) {
+    return { ...state, products_loading: false, products_error: true };
   }
   throw new Error(`No Matching "${action.type}" - action type`);
 };

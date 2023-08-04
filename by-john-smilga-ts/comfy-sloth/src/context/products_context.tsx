@@ -13,11 +13,32 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
 
+export interface ProductType {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  colors: string[];
+  company: string;
+  description: string;
+  category: string;
+  shipping?: boolean;
+  featured?: boolean;
+}
+
 export type InitialStateType = {
   isSidebarOpen: boolean;
+  products_loading: boolean;
+  products_error: boolean;
+  products: ProductType[];
+  featured_products: ProductType[];
 };
 const initialState: InitialStateType = {
   isSidebarOpen: false,
+  products_loading: false,
+  products_error: false,
+  products: [],
+  featured_products: [],
 };
 
 export type IAppState = {
@@ -38,6 +59,20 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
+  const fetchProducts = async (url: string) => {
+    dispatch({ type: GET_PRODUCTS_BEGIN });
+    try {
+      const response = await axios.get(url);
+      const products = response.data;
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
+    } catch (error) {
+      dispatch({ type: GET_PRODUCTS_ERROR });
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(url);
+  }, []);
 
   return (
     <ProductsContext.Provider
