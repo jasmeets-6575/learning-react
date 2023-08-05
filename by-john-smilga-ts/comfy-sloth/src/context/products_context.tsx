@@ -25,6 +25,45 @@ export interface ProductType {
   shipping?: boolean;
   featured?: boolean;
 }
+export interface SingleProductType {
+  id: string;
+  stock: number;
+  price: number;
+  shipping: boolean;
+  colors: string[];
+  category: string;
+  images: {
+    id: string;
+    width: number;
+    height: number;
+    url: string;
+    filename: string;
+    size: number;
+    type: string;
+    thumbnails: {
+      small: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      large: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      full: {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+  }[];
+  reviews: number;
+  stars: number;
+  name: string;
+  description: string;
+  company: string;
+}
 
 export type InitialStateType = {
   isSidebarOpen: boolean;
@@ -32,6 +71,9 @@ export type InitialStateType = {
   products_error: boolean;
   products: ProductType[];
   featured_products: ProductType[];
+  single_product_loading: boolean;
+  single_product_error: boolean;
+  single_product: {};
 };
 const initialState: InitialStateType = {
   isSidebarOpen: false,
@@ -39,6 +81,9 @@ const initialState: InitialStateType = {
   products_error: false,
   products: [],
   featured_products: [],
+  single_product_loading: false,
+  single_product_error: false,
+  single_product: {},
 };
 
 export type IAppState = {
@@ -48,6 +93,7 @@ export type IAppState = {
   products_loading: boolean;
   products_error: boolean;
   featured_products: ProductType[];
+  fetchSingleProduct: (url: string) => Promise<void>;
 };
 
 const ProductsContext = React.createContext<IAppState>({} as IAppState);
@@ -62,6 +108,7 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
+
   const fetchProducts = async (url: string) => {
     dispatch({ type: GET_PRODUCTS_BEGIN });
     try {
@@ -70,6 +117,16 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: products });
     } catch (error) {
       dispatch({ type: GET_PRODUCTS_ERROR });
+    }
+  };
+  const fetchSingleProduct = async (url: string) => {
+    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+    try {
+      const response = await axios.get(url);
+      const singleProduct = response.data;
+      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct });
+    } catch (error) {
+      dispatch({ type: GET_SINGLE_PRODUCT_ERROR });
     }
   };
 
@@ -83,6 +140,7 @@ export const ProductsProvider = ({ children }: ChildrenType): ReactElement => {
         ...state,
         openSidebar,
         closeSidebar,
+        fetchSingleProduct,
       }}
     >
       {children}
