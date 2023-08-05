@@ -73,7 +73,7 @@ export type InitialStateType = {
   featured_products: ProductType[];
   single_product_loading: boolean;
   single_product_error: boolean;
-  single_product: {};
+  single_product: SingleProductType | null;
 };
 const initialState: InitialStateType = {
   isSidebarOpen: false,
@@ -83,7 +83,7 @@ const initialState: InitialStateType = {
   featured_products: [],
   single_product_loading: false,
   single_product_error: false,
-  single_product: {},
+  single_product: null,
 };
 
 export type IAppState = {
@@ -93,6 +93,9 @@ export type IAppState = {
   products_loading: boolean;
   products_error: boolean;
   featured_products: ProductType[];
+  single_product_loading: boolean;
+  single_product_error: boolean;
+  single_product: SingleProductType | null;
   fetchSingleProduct: (url: string) => Promise<void>;
 };
 
