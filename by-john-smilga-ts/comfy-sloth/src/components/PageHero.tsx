@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 type PageHeroProps = {
   title: string;
-  product?: string;
+  product?: boolean;
 };
 const PageHero = ({ title, product }: PageHeroProps) => {
   return (
