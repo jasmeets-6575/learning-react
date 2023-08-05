@@ -8,7 +8,11 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
-import { InitialStateType, ProductType } from "../context/products_context";
+import {
+  InitialStateType,
+  ProductType,
+  SingleProductType,
+} from "../context/products_context";
 
 type SidebarOpenAction = {
   type: typeof SIDEBAR_OPEN;
@@ -37,7 +41,7 @@ type GetSingleProductBeginAction = {
 
 type GetSingleProductSuccessAction = {
   type: typeof GET_SINGLE_PRODUCT_SUCCESS;
-  payload: ProductType;
+  payload: SingleProductType;
 };
 
 type GetSingleProductErrorAction = {
@@ -78,7 +82,28 @@ const products_reducer = (state: InitialStateType, action: ProductAction) => {
   if (action.type === GET_PRODUCTS_ERROR) {
     return { ...state, products_loading: false, products_error: true };
   }
-  throw new Error(`No Matching "${action.type}" - action type`);
+  if (action.type === GET_SINGLE_PRODUCT_BEGIN) {
+    return {
+      ...state,
+      single_product_loading: true,
+      single_product_error: false,
+    };
+  }
+  if (action.type === GET_SINGLE_PRODUCT_SUCCESS) {
+    return {
+      ...state,
+      single_product_loading: false,
+      single_product: action.payload,
+    };
+  }
+  if (action.type === GET_SINGLE_PRODUCT_ERROR) {
+    return {
+      ...state,
+      single_product_loading: false,
+      single_product_error: true,
+    };
+  }
+  throw new Error(`No Matching action type`);
 };
 
 export default products_reducer;
