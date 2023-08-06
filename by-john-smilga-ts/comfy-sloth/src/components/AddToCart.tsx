@@ -13,10 +13,29 @@ interface AddToCartProps {
 const AddToCart = ({ product }: AddToCartProps) => {
   const { id, stock, colors } = product;
   const [mainColor, setMainColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
+
+  const increase = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount + 1;
+      if (tempAmount > stock) {
+        tempAmount = stock;
+      }
+      return tempAmount;
+    });
+  };
+  const decrease = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount - 1;
+      if (tempAmount < 1) {
+        tempAmount = 1;
+      }
+      return tempAmount;
+    });
+  };
 
   return (
     <Wrapper>
-      {" "}
       <div className="colors">
         <span>colors :</span>
         <div>
@@ -35,7 +54,22 @@ const AddToCart = ({ product }: AddToCartProps) => {
             );
           })}
         </div>
-      </div>{" "}
+      </div>
+      <div className="btn-container">
+        <AmountButtons
+          increase={increase}
+          decrease={decrease}
+          amount={amount}
+        />
+
+        <Link
+          to="/cart"
+          className="btn"
+          onClick={() => addToCart(id, mainColor, amount, product)}
+        >
+          add to cart
+        </Link>
+      </div>
     </Wrapper>
   );
 };
