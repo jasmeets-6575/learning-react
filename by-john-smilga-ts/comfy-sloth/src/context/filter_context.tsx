@@ -16,18 +16,22 @@ export type FilterInitialStateType = {
   filtered_products: ProductType[];
   all_products: ProductType[];
   grid_view: boolean;
+  sort: string;
 };
 const initialState: FilterInitialStateType = {
   filtered_products: [],
   all_products: [],
   grid_view: true,
+  sort: "price-lowest",
 };
 
 type IFilterAppState = {
   filtered_products: ProductType[];
   grid_view: boolean;
+  sort: string;
   setGridView: () => void;
   setListView: () => void;
+  updateSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const FilterContext = React.createContext<IFilterAppState>(
@@ -50,9 +54,15 @@ export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
   const setListView = () => {
     dispatch({ type: SET_LISTVIEW });
   };
+  const updateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    dispatch({ type: UPDATE_SORT, payload: value });
+  };
 
   return (
-    <FilterContext.Provider value={{ ...state, setGridView, setListView }}>
+    <FilterContext.Provider
+      value={{ ...state, updateSort, setGridView, setListView }}
+    >
       {children}
     </FilterContext.Provider>
   );
