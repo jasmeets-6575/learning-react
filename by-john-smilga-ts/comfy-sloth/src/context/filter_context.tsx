@@ -13,8 +13,8 @@ import {
 import { ProductType, useProductsContext } from "./products_context";
 
 export type FilterInitialStateType = {
-  filtered_products: [];
-  all_products: [];
+  filtered_products: ProductType[];
+  all_products: ProductType[];
 };
 const initialState: FilterInitialStateType = {
   filtered_products: [],
@@ -23,6 +23,7 @@ const initialState: FilterInitialStateType = {
 
 type IFilterAppState = {
   state: FilterInitialStateType;
+  filtered_products: ProductType[];
 };
 
 const FilterContext = React.createContext<IFilterAppState>(
