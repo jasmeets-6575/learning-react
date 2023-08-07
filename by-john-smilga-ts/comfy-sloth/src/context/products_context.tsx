@@ -87,6 +87,7 @@ const initialState: InitialStateType = {
 };
 
 export type IAppState = {
+  products: ProductType[];
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;

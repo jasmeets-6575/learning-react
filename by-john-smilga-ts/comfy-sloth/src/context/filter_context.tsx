@@ -10,17 +10,37 @@ import {
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
 } from "../actions";
-import { useProductsContext } from "./products_context";
+import { ProductType, useProductsContext } from "./products_context";
 
-const initialState = {};
+export type FilterInitialStateType = {
+  filtered_products: [];
+  all_products: [];
+};
+const initialState: FilterInitialStateType = {
+  filtered_products: [],
+  all_products: [],
+};
 
-const FilterContext = React.createContext({});
+type IFilterAppState = {
+  state: FilterInitialStateType;
+};
+
+const FilterContext = React.createContext<IFilterAppState>(
+  {} as IFilterAppState
+);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 
-export const AppProvider = ({ children }: ChildrenType): ReactElement => {
+export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
+  const { products } = useProductsContext();
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: LOAD_PRODUCTS, payload: products });
+  }, [products]);
+
   return (
-    <FilterContext.Provider value="filter context">
+    <FilterContext.Provider value={{ ...state }}>
       {children}
     </FilterContext.Provider>
   );
