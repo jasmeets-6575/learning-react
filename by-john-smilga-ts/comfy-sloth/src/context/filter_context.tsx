@@ -15,15 +15,17 @@ import { ProductType, useProductsContext } from "./products_context";
 export type FilterInitialStateType = {
   filtered_products: ProductType[];
   all_products: ProductType[];
+  grid_view: boolean;
 };
 const initialState: FilterInitialStateType = {
   filtered_products: [],
   all_products: [],
+  grid_view: true,
 };
 
 type IFilterAppState = {
-  state: FilterInitialStateType;
   filtered_products: ProductType[];
+  grid_view: boolean;
 };
 
 const FilterContext = React.createContext<IFilterAppState>(
