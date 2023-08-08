@@ -17,12 +17,32 @@ export type FilterInitialStateType = {
   all_products: ProductType[];
   grid_view: boolean;
   sort: string;
+  filters: {
+    text: string;
+    company: string;
+    category: string;
+    color: string;
+    min_price: number;
+    max_price: number;
+    price: number;
+    shipping: boolean;
+  };
 };
 const initialState: FilterInitialStateType = {
   filtered_products: [],
   all_products: [],
   grid_view: true,
   sort: "price-lowest",
+  filters: {
+    text: "",
+    company: "all",
+    category: "all",
+    color: "all",
+    min_price: 0,
+    max_price: 0,
+    price: 0,
+    shipping: false,
+  },
 };
 
 type IFilterAppState = {
@@ -47,6 +67,10 @@ export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
   useEffect(() => {
     dispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
+
+  useEffect(() => {
+    dispatch({ type: SORT_PRODUCTS });
+  }, [products, state.sort]);
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });

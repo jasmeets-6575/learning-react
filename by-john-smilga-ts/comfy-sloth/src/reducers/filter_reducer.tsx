@@ -9,7 +9,7 @@ import {
   CLEAR_FILTERS,
 } from "../actions";
 import { FilterInitialStateType } from "../context/filter_context";
-import { ProductType } from "../context/products_context";
+import { ProductType, SingleProductType } from "../context/products_context";
 
 type FilterActionType =
   | { type: typeof LOAD_PRODUCTS; payload: ProductType[] }
@@ -35,6 +35,31 @@ const filter_reducer = (
   }
   if (action.type === UPDATE_SORT) {
     return { ...state, sort: action.payload };
+  }
+  if (action.type === SORT_PRODUCTS) {
+    const { sort, filtered_products } = state;
+    let tempProducts: ProductType[] = [];
+    if (sort === "price-lowest") {
+      tempProducts = filtered_products.sort((a, b) => {
+        return a.price - b.price;
+      });
+    }
+    if (sort === "price-highest") {
+      tempProducts = filtered_products.sort((a, b) => {
+        return b.price - a.price;
+      });
+    }
+    if (sort === "name-a") {
+      tempProducts = filtered_products.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    }
+    if (sort === "name-z") {
+      tempProducts = filtered_products.sort((a, b) => {
+        return b.name.localeCompare(a.name);
+      });
+    }
+    return { ...state, filtered_products: tempProducts };
   }
   throw new Error(`No Matching action type`);
 };
