@@ -25,7 +25,13 @@ const filter_reducer = (
   action: FilterActionType
 ) => {
   if (action.type === LOAD_PRODUCTS) {
-    return { ...state, all_products: [...action.payload] };
+    let maxPrice = Math.max(...action.payload.map((p) => p.price));
+    return {
+      ...state,
+      all_products: [...action.payload],
+      filtered_products: [...action.payload],
+      filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
+    };
   }
   if (action.type === SET_GRIDVIEW) {
     return { ...state, grid_view: true };
@@ -60,6 +66,10 @@ const filter_reducer = (
       });
     }
     return { ...state, filtered_products: tempProducts };
+  }
+  if (action.type === UPDATE_FILTERS) {
+    const { name, value } = action.payload;
+    return { ...state, filters: { ...state.filters, [name]: value } };
   }
   throw new Error(`No Matching action type`);
 };

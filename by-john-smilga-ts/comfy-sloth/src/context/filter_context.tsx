@@ -52,6 +52,10 @@ type IFilterAppState = {
   setGridView: () => void;
   setListView: () => void;
   updateSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  updateFilters: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  clearFilters: () => void;
 };
 
 const FilterContext = React.createContext<IFilterAppState>(
@@ -82,10 +86,36 @@ export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
-
+  const updateFilters = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    let name = e.target.name;
+    let value: string | number | boolean = e.target.value;
+    if (name === "category") {
+      value = e.target.textContent || "";
+    }
+    if (name === "color") {
+      value = e.target.dataset.color || "";
+    }
+    if (name === "price") {
+      value = Number(value);
+    }
+    if (name === "shipping") {
+      value = e.target.checked;
+    }
+    dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
+  };
+  const clearFilters = () => {};
   return (
     <FilterContext.Provider
-      value={{ ...state, updateSort, setGridView, setListView }}
+      value={{
+        ...state,
+        clearFilters,
+        updateFilters,
+        updateSort,
+        setGridView,
+        setListView,
+      }}
     >
       {children}
     </FilterContext.Provider>
