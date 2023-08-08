@@ -44,7 +44,7 @@ const filter_reducer = (
   }
   if (action.type === SORT_PRODUCTS) {
     const { sort, filtered_products } = state;
-    let tempProducts: ProductType[] = [];
+    let tempProducts: any = [];
     if (sort === "price-lowest") {
       tempProducts = filtered_products.sort((a, b) => {
         return a.price - b.price;
@@ -65,6 +65,7 @@ const filter_reducer = (
         return b.name.localeCompare(a.name);
       });
     }
+
     return { ...state, filtered_products: tempProducts };
   }
   if (action.type === UPDATE_FILTERS) {
@@ -95,9 +96,7 @@ const filter_reducer = (
         return product.colors.find((c) => c === color);
       });
     }
-    // filter by price
     tempProducts = tempProducts.filter((product) => product.price <= price);
-    // filter by shipping
     if (shipping) {
       tempProducts = tempProducts.filter(
         (product) => product.shipping === true

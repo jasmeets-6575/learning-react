@@ -76,54 +76,52 @@ export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
   useEffect(() => {
     dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
-  }, [products, state.sort, state.filters]);
+  }, [state.sort, state.filters]);
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
   };
+
   const setListView = () => {
     dispatch({ type: SET_LISTVIEW });
   };
+
   const updateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
+
   const updateFilters = (e: any) => {
     let name = e.target.name;
     let value: string | number | boolean = e.target.value;
-
     if (name === "category") {
       value = e.target.textContent || "";
     }
-
     if (name === "color") {
       value = e.target.dataset.color || "";
     }
-
     if (name === "price") {
       value = Number(value);
     }
-
     if (name === "shipping") {
-      // Narrow down the type of e.target using a type assertion
-      value = (e.target as HTMLInputElement).checked;
+      value = e.target.checked;
     }
-
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
 
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });
   };
+
   return (
     <FilterContext.Provider
       value={{
         ...state,
-        clearFilters,
-        updateFilters,
-        updateSort,
         setGridView,
         setListView,
+        updateSort,
+        updateFilters,
+        clearFilters,
       }}
     >
       {children}
