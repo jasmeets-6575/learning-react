@@ -105,6 +105,20 @@ const filter_reducer = (
     }
     return { ...state, filtered_products: tempProducts };
   }
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: "",
+        company: "all",
+        category: "all",
+        color: "all",
+        price: state.filters.max_price,
+        shipping: false,
+      },
+    };
+  }
   throw new Error(`No Matching action type`);
 };
 
