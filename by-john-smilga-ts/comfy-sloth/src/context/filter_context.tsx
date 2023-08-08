@@ -12,21 +12,22 @@ import {
 } from "../actions";
 import { ProductType, useProductsContext } from "./products_context";
 
+export type Filters = {
+  text: string;
+  company: string;
+  category: string;
+  color: string;
+  min_price: number;
+  max_price: number;
+  price: number;
+  shipping: boolean;
+};
 export type FilterInitialStateType = {
   filtered_products: ProductType[];
   all_products: ProductType[];
   grid_view: boolean;
   sort: string;
-  filters: {
-    text: string;
-    company: string;
-    category: string;
-    color: string;
-    min_price: number;
-    max_price: number;
-    price: number;
-    shipping: boolean;
-  };
+  filters: Filters;
 };
 const initialState: FilterInitialStateType = {
   filtered_products: [],
@@ -52,10 +53,10 @@ type IFilterAppState = {
   setGridView: () => void;
   setListView: () => void;
   updateSort: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  updateFilters: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  updateFilters: (e: any) => void;
   clearFilters: () => void;
+  all_products: ProductType[];
+  filters: Filters;
 };
 
 const FilterContext = React.createContext<IFilterAppState>(
@@ -87,25 +88,30 @@ export const FilterProvider = ({ children }: ChildrenType): ReactElement => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
-  const updateFilters = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const updateFilters = (e: any) => {
     let name = e.target.name;
     let value: string | number | boolean = e.target.value;
+
     if (name === "category") {
       value = e.target.textContent || "";
     }
+
     if (name === "color") {
       value = e.target.dataset.color || "";
     }
+
     if (name === "price") {
       value = Number(value);
     }
+
     if (name === "shipping") {
-      value = e.target.checked;
+      // Narrow down the type of e.target using a type assertion
+      value = (e.target as HTMLInputElement).checked;
     }
+
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
+
   const clearFilters = () => {};
   return (
     <FilterContext.Provider
