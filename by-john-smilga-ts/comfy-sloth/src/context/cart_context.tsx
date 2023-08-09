@@ -9,6 +9,15 @@ import {
 } from "../actions";
 import { SingleProductType } from "./products_context";
 
+const getLocalStorage = () => {
+  let cart = localStorage.getItem("cart");
+  if (cart) {
+    return JSON.parse(cart);
+  } else {
+    return [];
+  }
+};
+
 type CartType = {
   id: string;
   name: string;
@@ -26,7 +35,7 @@ export type CartInitialStateType = {
   shipping_fee: number;
 };
 const cartInitialState: CartInitialStateType = {
-  cart: [],
+  cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
@@ -68,6 +77,10 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const removeItem = (id: string) => {};
   const toggleAmount = (id: string, value: number) => {};
   const clearCart = () => {};
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(state.cart));
+  }, [state.cart]);
   return (
     <CartContext.Provider
       value={{ ...state, clearCart, toggleAmount, removeItem, addToCart }}
