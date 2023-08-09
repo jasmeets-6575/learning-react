@@ -1,9 +1,11 @@
 import CartItem from "./CartItem";
-import { useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
 import { CartItemType } from "../cartItems";
+import { clearCart } from "../features/cart/cartSlice";
 
 const CartContainer = () => {
   const { cartItems, total, amount } = useAppSelector((store) => store.cart);
+  const dispatch = useAppDispatch();
 
   if (amount < 1) {
     return (
@@ -33,7 +35,9 @@ const CartContainer = () => {
             total <span>${total.toFixed(2)}</span>
           </h4>
         </div>
-        <button className="btn clear-btn">clear cart</button>
+        <button className="btn clear-btn" onClick={() => dispatch(clearCart())}>
+          clear cart
+        </button>
       </footer>
     </section>
   );
