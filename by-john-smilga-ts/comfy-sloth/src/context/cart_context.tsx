@@ -7,6 +7,7 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
 } from "../actions";
+import { SingleProductType } from "./products_context";
 
 type CartType = {
   id: string;
@@ -31,15 +32,28 @@ const cartInitialState: CartInitialStateType = {
   shipping_fee: 534,
 };
 
-type ICartAppState = {};
+type ICartAppState = {
+  addToCart: (
+    id: string,
+    color: string,
+    amount: number,
+    product: SingleProductType
+  ) => void;
+};
 
 const CartContext = React.createContext<ICartAppState>({} as ICartAppState);
 
 type ChildrenType = { children?: ReactElement | ReactElement[] };
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const [state, dispatch] = useReducer(reducer, cartInitialState);
+
+  const addToCart = (id, color, amount, product) => {
+    dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
+  };
   return (
-    <CartContext.Provider value={{ ...state }}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ ...state, addToCart }}>
+      {children}
+    </CartContext.Provider>
   );
 };
 
