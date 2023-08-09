@@ -39,12 +39,16 @@ interface Product {
   stock: number;
 }
 type ICartAppState = {
+  cart: CartType[];
   addToCart: (
     id: string,
     color: string,
     amount: number,
     product: Product
   ) => void;
+  removeItem: (id: string) => void;
+  toggleAmount: (id: string, value: number) => void;
+  clearCart: () => void;
 };
 
 const CartContext = React.createContext<ICartAppState>({} as ICartAppState);
@@ -61,8 +65,13 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   ) => {
     dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
+  const removeItem = (id: string) => {};
+  const toggleAmount = (id: string, value: number) => {};
+  const clearCart = () => {};
   return (
-    <CartContext.Provider value={{ ...state, addToCart }}>
+    <CartContext.Provider
+      value={{ ...state, clearCart, toggleAmount, removeItem, addToCart }}
+    >
       {children}
     </CartContext.Provider>
   );
