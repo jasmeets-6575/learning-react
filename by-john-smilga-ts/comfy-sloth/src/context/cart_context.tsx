@@ -58,7 +58,7 @@ type ICartAppState = {
     product: Product
   ) => void;
   removeItem: (id: string) => void;
-  toggleAmount: (id: string, value: number) => void;
+  toggleAmount: (id: string, value: string) => void;
   clearCart: () => void;
 };
 
@@ -76,9 +76,13 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   ) => {
     dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
-  const removeItem = (id: string) => {};
-  const toggleAmount = (id: string, value: number) => {};
-  const clearCart = () => {};
+  const removeItem = (id: string) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  };
+  const toggleAmount = (id: string, value: string) => {};
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
