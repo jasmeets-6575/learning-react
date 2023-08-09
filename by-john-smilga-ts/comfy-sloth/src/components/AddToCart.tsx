@@ -34,7 +34,9 @@ const AddToCart = ({ product }: AddToCartProps) => {
       return tempAmount;
     });
   };
-
+  const handleAddToCart = () => {
+    addToCart(id, mainColor, amount, product);
+  };
   return (
     <Wrapper>
       <div className="colors">
@@ -63,11 +65,7 @@ const AddToCart = ({ product }: AddToCartProps) => {
           amount={amount}
         />
 
-        <Link
-          to="/cart"
-          className="btn"
-          onClick={addToCart(id, mainColor, amount, product)}
-        >
+        <Link to="/cart" className="btn" onClick={handleAddToCart}>
           add to cart
         </Link>
       </div>
