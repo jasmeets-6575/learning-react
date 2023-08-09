@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import cartItems, { CartItemType } from "../../cartItems";
 
 interface InitialStateProps {
-  cartItems: [];
+  cartItems: CartItemType[];
   amount: number;
   total: number;
   isLoading: boolean;
 }
 const initialState: InitialStateProps = {
-  cartItems: [],
+  cartItems: cartItems,
   amount: 0,
   total: 0,
   isLoading: true,

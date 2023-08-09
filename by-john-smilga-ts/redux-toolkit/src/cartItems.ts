@@ -1,4 +1,4 @@
-export type CartItem = {
+export type CartItemType = {
   id: string;
   title: string;
   price: number;
@@ -6,7 +6,7 @@ export type CartItem = {
   amount: number;
 };
 
-const cartItems: CartItem[] = [
+const cartItems: CartItemType[] = [
   {
     id: "rec1JZlfCIBOPdcT2",
     title: "Samsung Galaxy S8",
