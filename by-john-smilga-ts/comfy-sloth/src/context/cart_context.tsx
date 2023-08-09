@@ -58,7 +58,7 @@ type ICartAppState = {
     product: Product
   ) => void;
   removeItem: (id: string) => void;
-  toggleAmount: (id: string, value: string) => void;
+  toggleAmount: (id: string, value: "inc" | "dec") => void;
   clearCart: () => void;
 };
 
@@ -79,7 +79,15 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const removeItem = (id: string) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
-  const toggleAmount = (id: string, value: string) => {};
+  const toggleAmount = (id: string, value: "inc" | "dec") => {
+    dispatch({
+      type: TOGGLE_CART_ITEM_AMOUNT,
+      payload: {
+        id,
+        value,
+      },
+    });
+  };
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
   };
