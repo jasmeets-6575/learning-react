@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import cartItems, { CartItemType } from "../../cartItems";
+import { CartItemType } from "../../cartItems";
 import axios from "axios";
 
 const url = "https://course-api.com/react-useReducer-cart-project";
@@ -12,7 +12,7 @@ interface InitialStateProps {
 }
 
 const initialState: InitialStateProps = {
-  cartItems: cartItems,
+  cartItems: [],
   amount: 0,
   total: 0,
   isLoading: true,
