@@ -1,5 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import cartItems, { CartItemType } from "../../cartItems";
+import axios from "axios";
+
+const url = "https://course-api.com/react-useReducer-cart-project";
 
 interface InitialStateProps {
   cartItems: CartItemType[];
@@ -14,6 +17,18 @@ const initialState: InitialStateProps = {
   isLoading: true,
 };
 
+export const getCartItems = createAsyncThunk<CartItemType[]>(
+  "cart/getCartItems",
+  async (_, thunkAPI) => {
+    try {
+      const resp = await axios(url);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("something went wrong");
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -21,19 +36,23 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cartItems = [];
     },
-    removeItem: (state, action) => {
+    removeItem: (state, action: PayloadAction<string>) => {
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
     },
-    increase: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
+    increase: (state, action: PayloadAction<{ id: string }>) => {
+      const cartItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
       if (cartItem) {
         cartItem.amount = cartItem.amount + 1;
       }
     },
-    decrease: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      if (cartItem) {
+    decrease: (state, action: PayloadAction<{ id: string }>) => {
+      const cartItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
+      if (cartItem && cartItem.amount > 0) {
         cartItem.amount = cartItem.amount - 1;
       }
     },
@@ -46,6 +65,19 @@ const cartSlice = createSlice({
       });
       state.amount = amount;
       state.total = total;
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(getCartItems.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(getCartItems.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.cartItems = action.payload;
+        })
+        .addCase(getCartItems.rejected, (state) => {
+          state.isLoading = false;
+        });
     },
   },
 });
