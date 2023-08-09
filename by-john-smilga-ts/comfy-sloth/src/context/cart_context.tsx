@@ -49,6 +49,8 @@ interface Product {
 }
 type ICartAppState = {
   cart: CartType[];
+  total_amount: number;
+  shipping_fee: number;
   addToCart: (
     id: string,
     color: string,
