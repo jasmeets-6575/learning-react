@@ -50,6 +50,7 @@ interface Product {
 type ICartAppState = {
   cart: CartType[];
   total_amount: number;
+  total_items: number;
   shipping_fee: number;
   addToCart: (
     id: string,
@@ -94,6 +95,7 @@ export const CartProvider = ({ children }: ChildrenType): ReactElement => {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
+    dispatch({ type: COUNT_CART_TOTALS });
   }, [state.cart]);
   return (
     <CartContext.Provider

@@ -9,7 +9,6 @@ type PageHeroProps = {
 const PageHero = ({ title, product }: PageHeroProps) => {
   return (
     <Wrapper>
-      PageHeroProps
       <div className="section-center">
         <h3>
           <Link to="/">Home </Link>
