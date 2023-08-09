@@ -1,16 +1,6 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
-import {
-  Home,
-  SingleProduct,
-  Cart,
-  Checkout,
-  Error,
-  About,
-  Products,
-  PrivateRoute,
-} from "./pages";
+import { Home, SingleProduct, Cart, Checkout, Error, Products } from "./pages";
 
 function App() {
   return (

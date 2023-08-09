@@ -9,7 +9,7 @@ import {
   CLEAR_FILTERS,
 } from "../actions";
 import { FilterInitialStateType } from "../context/filter_context";
-import { ProductType, SingleProductType } from "../context/products_context";
+import { ProductType } from "../context/products_context";
 
 type FilterActionType =
   | { type: typeof LOAD_PRODUCTS; payload: ProductType[] }

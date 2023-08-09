@@ -7,7 +7,6 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
 } from "../actions";
-import { SingleProductType } from "./products_context";
 
 const getLocalStorage = () => {
   let cart = localStorage.getItem("cart");

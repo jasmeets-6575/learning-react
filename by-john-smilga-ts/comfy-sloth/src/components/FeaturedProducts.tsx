@@ -1,4 +1,3 @@
-import React from "react";
 import { useProductsContext } from "../context/products_context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
