@@ -10,6 +10,7 @@ interface InitialStateProps {
   total: number;
   isLoading: boolean;
 }
+
 const initialState: InitialStateProps = {
   cartItems: cartItems,
   amount: 0,
@@ -66,22 +67,22 @@ const cartSlice = createSlice({
       state.amount = amount;
       state.total = total;
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(getCartItems.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(getCartItems.fulfilled, (state, action) => {
-          state.isLoading = false;
-          state.cartItems = action.payload;
-        })
-        .addCase(getCartItems.rejected, (state) => {
-          state.isLoading = false;
-        });
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCartItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cartItems = action.payload;
+      })
+      .addCase(getCartItems.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 
-export const { clearCart, removeItem, increase, calculateTotals, decrease } =
+export const { clearCart, removeItem, increase, decrease, calculateTotals } =
   cartSlice.actions;
 export default cartSlice.reducer;

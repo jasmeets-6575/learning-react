@@ -9,7 +9,6 @@ export const store: Store = configureStore({
     modal: modalReducer,
   },
 });
-console.log(store);
 
 export const useAppDispatch: () => typeof store.dispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<
