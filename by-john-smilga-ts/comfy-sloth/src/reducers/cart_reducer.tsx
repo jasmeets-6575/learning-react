@@ -10,7 +10,7 @@ import { CartInitialStateType } from "../context/cart_context";
 interface AddToCartAction {
   type: typeof ADD_TO_CART;
   payload: {
-    id: number;
+    id: string;
     color: string;
     amount: number;
     product: {
@@ -54,6 +54,18 @@ const cart_reducer = (state: CartInitialStateType, action: CartAction) => {
     const { id, color, amount, product } = action.payload;
     const tempItem = state.cart.find((i) => i.id === id + color);
     if (tempItem) {
+      const tempCart = state.cart.map((cartItem) => {
+        if (cartItem.id === id + color) {
+          let newAmount = cartItem.amount + amount;
+          if (newAmount > cartItem.max) {
+            newAmount = cartItem.max;
+          }
+          return { ...cartItem, amount: newAmount };
+        } else {
+          return cartItem;
+        }
+      });
+      return { ...state, cart: tempCart };
     } else {
       const newItem = {
         id: id + color,

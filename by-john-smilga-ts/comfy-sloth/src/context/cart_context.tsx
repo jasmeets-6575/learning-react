@@ -32,12 +32,18 @@ const cartInitialState: CartInitialStateType = {
   shipping_fee: 534,
 };
 
+interface Product {
+  name: string;
+  images: { url: string }[];
+  price: number;
+  stock: number;
+}
 type ICartAppState = {
   addToCart: (
     id: string,
     color: string,
     amount: number,
-    product: SingleProductType
+    product: Product
   ) => void;
 };
 
@@ -47,7 +53,12 @@ type ChildrenType = { children?: ReactElement | ReactElement[] };
 export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const [state, dispatch] = useReducer(reducer, cartInitialState);
 
-  const addToCart = (id, color, amount, product) => {
+  const addToCart = (
+    id: string,
+    color: string,
+    amount: number,
+    product: Product
+  ) => {
     dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
   return (
