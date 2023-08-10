@@ -21,6 +21,7 @@ type IAppState = {
   correct: number;
   error: boolean;
   isModalOpen: boolean;
+  nextQuestion: () => void;
 };
 const AppContext = React.createContext<IAppState>({} as IAppState);
 
@@ -53,6 +54,22 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
       setWaiting(true);
     }
   };
+
+  const nextQuestion = () => {
+    setIndex((oldIndex) => {
+      const index = oldIndex + 1;
+      if (index > questions.length - 1) {
+        openModal();
+        return 0;
+      } else {
+        return index;
+      }
+    });
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     fetchQuestions(tempUrl);
   }, []);
@@ -66,6 +83,7 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
         correct,
         error,
         isModalOpen,
+        nextQuestion,
       }}
     >
       {children}
