@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useFetch } from "./useFetch";
 import Follower from "./Follower";
 
-interface IFollower {
+export interface IFollower {
   id: number;
   avatar_url: string;
   html_url: string;
