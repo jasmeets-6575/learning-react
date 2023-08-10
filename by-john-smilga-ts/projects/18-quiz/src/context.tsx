@@ -22,6 +22,8 @@ type IAppState = {
   error: boolean;
   isModalOpen: boolean;
   nextQuestion: () => void;
+  checkAnswer: (url: any) => void;
+  closeModal: () => void;
 };
 const AppContext = React.createContext<IAppState>({} as IAppState);
 
@@ -66,8 +68,20 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
       }
     });
   };
+  const checkAnswer = (value: any) => {
+    if (value) {
+      setCorrect((oldState) => oldState + 1);
+    }
+    nextQuestion();
+  };
+
   const openModal = () => {
     setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setWaiting(true);
+    setCorrect(0);
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -84,6 +98,8 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
         error,
         isModalOpen,
         nextQuestion,
+        checkAnswer,
+        closeModal,
       }}
     >
       {children}
