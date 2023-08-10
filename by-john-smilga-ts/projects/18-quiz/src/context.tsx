@@ -1,5 +1,11 @@
 import axios from "axios";
-import React, { useContext, ReactElement, useState, useEffect } from "react";
+import React, { useContext, ReactElement, useState } from "react";
+
+interface Quiz {
+  amount: number;
+  category: keyof typeof table;
+  difficulty: string;
+}
 
 const table = {
   sports: 21,
@@ -22,8 +28,11 @@ type IAppState = {
   error: boolean;
   isModalOpen: boolean;
   nextQuestion: () => void;
-  checkAnswer: (url: any) => void;
+  checkAnswer: (value: boolean) => void;
   closeModal: () => void;
+  quiz: Quiz;
+  handleChange: (e: any) => void;
+  handleSubmit: (e: any) => void;
 };
 const AppContext = React.createContext<IAppState>({} as IAppState);
 
@@ -35,6 +44,11 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
   const [index, setIndex] = useState<number>(0);
   const [correct, setCorrect] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
+  const [quiz, setQuiz] = useState<Quiz>({
+    amount: 10,
+    category: "sports",
+    difficulty: "easy",
+  });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const fetchQuestions = async (url: string) => {
@@ -84,9 +98,20 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    fetchQuestions(tempUrl);
-  }, []);
+  const handleChange = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setQuiz({ ...quiz, [name]: value });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const { amount, category, difficulty } = quiz;
+
+    const url = `${API_ENDPOINT}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
+    fetchQuestions(url);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -100,6 +125,9 @@ const AppProvider = ({ children }: ChildrenType): ReactElement => {
         nextQuestion,
         checkAnswer,
         closeModal,
+        quiz,
+        handleChange,
+        handleSubmit,
       }}
     >
       {children}

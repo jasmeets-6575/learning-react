@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "./context";
 
-const SetupForm = () => {
+const SetupForm: React.FC = () => {
   const { quiz, handleChange, handleSubmit, error } = useGlobalContext();
   return (
     <main>
@@ -23,7 +23,6 @@ const SetupForm = () => {
             />
           </div>
           {/* category */}
-
           <div className="form-control">
             <label htmlFor="category">category</label>
             <select
@@ -39,7 +38,6 @@ const SetupForm = () => {
             </select>
           </div>
           {/* difficulty */}
-
           <div className="form-control">
             <label htmlFor="difficulty">select difficulty</label>
             <select
@@ -59,7 +57,7 @@ const SetupForm = () => {
               can't generate questions, please try different options
             </p>
           )}
-          <button type="submit" onClick={handleSubmit} className="submit-btn">
+          <button type="button" onClick={handleSubmit} className="submit-btn">
             start
           </button>
         </form>
