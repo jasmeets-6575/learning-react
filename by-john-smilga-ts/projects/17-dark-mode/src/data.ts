@@ -1,4 +1,4 @@
-interface ArticleType {
+export interface ArticleType {
   id: number;
   title: string;
   date: Date;
