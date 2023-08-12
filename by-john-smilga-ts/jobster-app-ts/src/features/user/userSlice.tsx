@@ -5,6 +5,7 @@ import { ToastContent, toast } from "react-toastify";
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
+  removeUserFromLocalStorage,
 } from "../../utils/localStorage";
 
 export type UserType = {
@@ -81,10 +82,17 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    logoutUser: (state, { payload }) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      if (payload) {
+        toast.success(payload);
+      }
+    },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
-    logoutUser: () => {},
   },
   extraReducers: (builder) => {
     builder
