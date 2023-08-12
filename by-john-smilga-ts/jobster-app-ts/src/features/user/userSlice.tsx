@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customFetch from "../../utils/axios";
 import { AxiosError } from "axios";
-import { toast } from "react-toastify";
+import { ToastContent, toast } from "react-toastify";
+import { addUserToLocalStorage } from "../../utils/localStorage";
 
 export type UserType = {
   name: string;
@@ -14,12 +15,12 @@ export type RegisterUserType = {
   name: string;
   email: string;
   password: string;
-  user?: UserType
+  user?: UserType;
 };
 export type LoginUserType = {
   email: string;
   password: string;
-  user?: UserType
+  user?: UserType;
 };
 
 type UserInitialStateType = {
@@ -85,13 +86,16 @@ const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         const { user } = payload;
         state.isLoading = false;
-        state.user = user;
-       
-        toast.success(`Hello there ${user.name}`);
+        if (user) {
+          state.user = user;
+          addUserToLocalStorage(user);
+          toast.success(`Hello there ${user.name}`);
+        }
       })
-      .addCase(registerUser.rejected, (state, { payload }) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        toast.error(payload);
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
@@ -99,14 +103,18 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         const { user } = payload;
         state.isLoading = false;
-        state.user = user;
-        addUserToLocalStorage(user);
-        toast.success(`Welcome Back ${user.name}`);
+        if (user) {
+          state.user = user;
+          addUserToLocalStorage(user);
+          toast.success(`Hello there ${user.name}`);
+        }
       })
-      .addCase(loginUser.rejected, (state, { payload }) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        toast.error(payload);
-      })
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
+      });
+  },
 });
 
 export const {} = userSlice.actions;
