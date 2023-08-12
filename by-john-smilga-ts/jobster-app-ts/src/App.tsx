@@ -15,10 +15,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Stats />} />
+          <Route element={<Stats />} />
           <Route path="all-jobs" element={<AllJobs />} />
           <Route path="add-job" element={<AddJob />} />
-          <Route path="profile" element={<Profile />} />
+          <Route index path="profile" element={<Profile />} />
         </Route>
         <Route path="register" element={<Register />} />
         <Route path="landing" element={<Landing />} />

@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customFetch from "../../utils/axios";
 import { AxiosError } from "axios";
 import { ToastContent, toast } from "react-toastify";
-import { addUserToLocalStorage } from "../../utils/localStorage";
+import {
+  addUserToLocalStorage,
+  getUserFromLocalStorage,
+} from "../../utils/localStorage";
 
 export type UserType = {
   name: string;
@@ -31,7 +34,7 @@ type UserInitialStateType = {
 const initialState: UserInitialStateType = {
   isLoading: false,
   isSidebarOpen: false,
-  user: null,
+  user: getUserFromLocalStorage(),
 };
 
 export const registerUser = createAsyncThunk<
