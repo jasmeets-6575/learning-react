@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { FormRow } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { toast } from "react-toastify";
+import { updateUser } from "../../features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../../Store";
 
 const Profile = () => {
@@ -21,6 +22,7 @@ const Profile = () => {
       toast.error("Please fill out all fields");
       return;
     }
+    dispatch(updateUser({ name, email, lastName, location }));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

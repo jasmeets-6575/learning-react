@@ -8,6 +8,20 @@ import {
   removeUserFromLocalStorage,
 } from "../../utils/localStorage";
 
+type UpdateUserGetState = {
+  user: {
+    isLoading: boolean;
+    isSidebarOpen: boolean;
+    user: {
+      name: string;
+      lastName: string;
+      email: string;
+      location: string;
+      token: string;
+    } | null;
+  };
+};
+
 export type UserType = {
   name: string;
   lastName: string;
@@ -78,6 +92,40 @@ export const loginUser = createAsyncThunk<
   }
 });
 
+export const updateUser = createAsyncThunk<UserType, Partial<UserType>>(
+  "user/updateUser",
+  async (user, { rejectWithValue, getState, dispatch }) => {
+    try {
+      //   let gst = getState();
+      //   console.log(gst);
+
+      const resp = await customFetch.patch("/auth/updateUser", user, {
+        headers: {
+          Authorization: `Bearer ${
+            (getState() as UpdateUserGetState).user?.user?.token
+          }`,
+        },
+      });
+      return resp.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        if (error && error.response && error.response.status === 401) {
+          dispatch(logoutUser("Unauthorized! logging out..."));
+          return rejectWithValue(`Unauthorized! logging out...`);
+        }
+        return rejectWithValue(message);
+      }
+      throw error;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -126,6 +174,23 @@ const userSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        const user = payload;
+        state.isLoading = false;
+        if (user) {
+          state.user = user;
+          addUserToLocalStorage(user);
+          toast.success(`User Updated`);
+        }
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
         const toastContent: ToastContent = action.payload as ToastContent;
         toast.error(toastContent);
