@@ -96,9 +96,6 @@ export const updateUser = createAsyncThunk<UserType, Partial<UserType>>(
   "user/updateUser",
   async (user, { rejectWithValue, getState, dispatch }) => {
     try {
-      //   let gst = getState();
-      //   console.log(gst);
-
       const resp = await customFetch.patch("/auth/updateUser", user, {
         headers: {
           Authorization: `Bearer ${

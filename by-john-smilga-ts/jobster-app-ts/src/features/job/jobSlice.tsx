@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getUserFromLocalStorage } from "../../utils/localStorage";
 
 type JobInitialStateType = {
   isLoading: boolean;
@@ -26,12 +27,68 @@ const initialState: JobInitialStateType = {
   editJobId: "",
 };
 
+export type PayloadJobInitialStateType = {
+  [K in keyof JobInitialStateType]: {
+    key: K;
+    value: JobInitialStateType[K];
+  };
+}[keyof JobInitialStateType];
+
 const jobSlice = createSlice({
   name: "job",
   initialState,
-  reducers: {},
+  reducers: {
+    //
+    handleChange: (
+      state,
+      action: PayloadAction<PayloadJobInitialStateType>
+    ) => {
+      const obj = action.payload;
+      if (obj) {
+        const { key, value } = obj;
+        switch (key) {
+          case "isLoading":
+            state.isLoading = value;
+            break;
+          case "position":
+            state.position = value;
+            break;
+          case "company":
+            state.company = value;
+            break;
+          case "jobLocation":
+            state.jobLocation = value;
+            break;
+          case "jobTypeOptions":
+            state.jobTypeOptions = value;
+            break;
+          case "status":
+            state.status = value;
+            break;
+          case "isEditing":
+            state.isEditing = value;
+            break;
+          case "editJobId":
+            state.editJobId = value;
+            break;
+          case "statusOptions":
+            state.statusOptions = value;
+            break;
+          case "jobType":
+            state.jobType = value;
+            break;
+        }
+      }
+    },
+    clearValues: () => {
+      return {
+        ...initialState,
+        jobLocation: getUserFromLocalStorage()?.location || "",
+      };
+    },
+  }, //
 });
 
-export const {} = jobSlice.actions;
+export const { handleChange, clearValues } = jobSlice.actions;
 
 export default jobSlice.reducer;
