@@ -1,7 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUserFromLocalStorage } from "../../utils/localStorage";
+import { AxiosError } from "axios";
+import customFetch from "../../utils/axios";
+import { ToastContent, toast } from "react-toastify";
 
-type JobInitialStateType = {
+export type JobInitialStateType = {
   isLoading: boolean;
   position: string;
   company: string;
@@ -14,7 +17,7 @@ type JobInitialStateType = {
   editJobId: string;
 };
 
-const initialState: JobInitialStateType = {
+export const initialState: JobInitialStateType = {
   isLoading: false,
   position: "",
   company: "",
@@ -33,6 +36,102 @@ export type PayloadJobInitialStateType = {
     value: JobInitialStateType[K];
   };
 }[keyof JobInitialStateType];
+
+export const createJob = createAsyncThunk<
+  JobInitialStateType,
+  Partial<JobInitialStateType>
+>("job/createJob", async (job, { rejectWithValue, getState, dispatch }) => {
+  try {
+    const resp = await customFetch.post("/jobs", job, {
+      headers: {
+        Authorization: `Bearer ${
+          (getState() as RootStateType).user?.user?.token
+        }`,
+      },
+    });
+    dispatch(clearValues());
+    return resp.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return rejectWithValue(message);
+    }
+    // unhandled non-AxiosError goes here
+    throw error;
+  }
+});
+
+export const deleteJob = createAsyncThunk<
+  JobInitialStateType,
+  JobInitialStateType
+>(
+  "job/deleteJob",
+  async ({ editJobId: jobId }, { rejectWithValue, getState, dispatch }) => {
+    const url = `/jobs/${jobId}`;
+    try {
+      const resp = await customFetch.delete(url, {
+        headers: {
+          Authorization: `Bearer ${
+            (getState() as RootStateType).user?.user?.token
+          }`,
+        },
+      });
+      return resp.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        return rejectWithValue(message);
+      }
+      // unhandled non-AxiosError goes here
+      throw error;
+    }
+  }
+);
+export const editJob = createAsyncThunk<
+  JobInitialStateType,
+  JobInitialStateType
+>(
+  "job/editJob",
+  async (
+    { editJobId: jobId, jobType: job },
+    { rejectWithValue, getState, dispatch }
+  ) => {
+    const url = `/jobs/${jobId}`;
+    try {
+      const resp = await customFetch.patch(url, job, {
+        headers: {
+          Authorization: `Bearer ${
+            (getState() as RootStateType).user?.user?.token
+          }`,
+        },
+      });
+      dispatch(clearValues());
+      return resp.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        return rejectWithValue(message);
+      }
+      // unhandled non-AxiosError goes here
+      throw error;
+    }
+  }
+);
 
 const jobSlice = createSlice({
   name: "job",
@@ -86,7 +185,49 @@ const jobSlice = createSlice({
         jobLocation: getUserFromLocalStorage()?.location || "",
       };
     },
+    setEditJob: (state, action) => {
+      return { ...state, isEditing: true, ...action.payload };
+    },
   }, //
+  extraReducers: (builder) => {
+    builder
+      .addCase(createJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success(" Job Created");
+      })
+      .addCase(createJob.rejected, (state, action) => {
+        state.isLoading = false;
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
+      })
+      .addCase(deleteJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job Deleted..");
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
+        state.isLoading = false;
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
+      })
+      .addCase(editJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job Modified...");
+      })
+      .addCase(editJob.rejected, (state, action) => {
+        state.isLoading = false;
+        const toastContent: ToastContent = action.payload as ToastContent;
+        toast.error(toastContent);
+      });
+  },
 });
 
 export const { handleChange, clearValues } = jobSlice.actions;

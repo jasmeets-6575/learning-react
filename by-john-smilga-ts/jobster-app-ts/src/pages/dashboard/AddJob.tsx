@@ -1,9 +1,14 @@
 import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { toast } from "react-toastify";
-import { clearValues, handleChange } from "../../features/job/jobSlice";
+import {
+  clearValues,
+  handleChange,
+  initialState,
+} from "../../features/job/jobSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../Store";
+import { AnyAction } from "@reduxjs/toolkit";
 
 const AddJob = () => {
   const {
@@ -31,9 +36,9 @@ const AddJob = () => {
   const handleJobInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const name = e.target.name;
+    const key = e.target.name as keyof typeof initialState;
     const value = e.target.value;
-    dispatch(handleChange({ name, value }));
+    dispatch(handleChange({ key, value }) as unknown as AnyAction);
   };
 
   useEffect(() => {
