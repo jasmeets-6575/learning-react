@@ -30,18 +30,14 @@ export const initialState: JobInitialStateType = {
   editJobId: "",
 };
 
-export type PayloadJobInitialStateType = {
-  [K in keyof JobInitialStateType]: {
-    key: K;
-    value: JobInitialStateType[K];
-  };
-}[keyof JobInitialStateType];
-
 export const createJob = createAsyncThunk<
   JobInitialStateType,
   Partial<JobInitialStateType>
 >("job/createJob", async (job, { rejectWithValue, getState, dispatch }) => {
   try {
+    let gSTate = getState();
+    console.log(gSTate);
+
     const resp = await customFetch.post("/jobs", job, {
       headers: {
         Authorization: `Bearer ${
@@ -133,6 +129,13 @@ export const editJob = createAsyncThunk<
   }
 );
 
+export type IJobSliceInitialStateFieldPayload = {
+  [K in keyof JobInitialStateType]: {
+    key: K;
+    value: JobInitialStateType[K];
+  };
+}[keyof JobInitialStateType];
+
 const jobSlice = createSlice({
   name: "job",
   initialState,
@@ -140,7 +143,7 @@ const jobSlice = createSlice({
     //
     handleChange: (
       state,
-      action: PayloadAction<PayloadJobInitialStateType>
+      action: PayloadAction<IJobSliceInitialStateFieldPayload>
     ) => {
       const obj = action.payload;
       if (obj) {
@@ -194,7 +197,7 @@ const jobSlice = createSlice({
       .addCase(createJob.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createJob.fulfilled, (state, action) => {
+      .addCase(createJob.fulfilled, (state) => {
         state.isLoading = false;
         toast.success(" Job Created");
       })
@@ -206,7 +209,7 @@ const jobSlice = createSlice({
       .addCase(deleteJob.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteJob.fulfilled, (state, action) => {
+      .addCase(deleteJob.fulfilled, (state) => {
         state.isLoading = false;
         toast.success("Job Deleted..");
       })
@@ -218,7 +221,7 @@ const jobSlice = createSlice({
       .addCase(editJob.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(editJob.fulfilled, (state, action) => {
+      .addCase(editJob.fulfilled, (state) => {
         state.isLoading = false;
         toast.success("Job Modified...");
       })

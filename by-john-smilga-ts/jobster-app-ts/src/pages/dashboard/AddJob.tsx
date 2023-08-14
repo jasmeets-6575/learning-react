@@ -1,16 +1,18 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
-import { toast } from "react-toastify";
 import {
-  clearValues,
   handleChange,
-  initialState,
+  clearValues,
+  createJob,
+  editJob,
 } from "../../features/job/jobSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../Store";
-import { AnyAction } from "@reduxjs/toolkit";
 
-const AddJob = () => {
+const AddJob: React.FC = () => {
   const {
     isLoading,
     position,
@@ -23,22 +25,37 @@ const AddJob = () => {
     isEditing,
     editJobId,
   } = useAppSelector((store) => store.job);
+  const { user } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!position || !company || !jobLocation) {
       toast.error("Please Fill Out All Fields");
       return;
     }
+    if (isEditing) {
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: {
+            position,
+            company,
+            jobLocation,
+            jobType,
+            status,
+          },
+        })
+      );
+      return;
+    }
+    dispatch(createJob({ position, company, jobLocation, jobType, status }));
   };
 
-  const handleJobInput = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const key = e.target.name as keyof typeof initialState;
+  const handleJobInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
     const value = e.target.value;
-    dispatch(handleChange({ key, value }) as unknown as AnyAction);
+    dispatch(handleChange({ name, value }));
   };
 
   useEffect(() => {
@@ -113,4 +130,5 @@ const AddJob = () => {
     </Wrapper>
   );
 };
+
 export default AddJob;
